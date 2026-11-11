@@ -423,7 +423,7 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
 <div id="mdb">
   <div id="alertBox" class="alert-box" style="display:none"></div>
   <div class="hdr">
-    <h1><span class="dot"></span>Meta Ads &mdash; Painel <span id="appVer" style="font-size:11px;color:var(--md-muted);font-weight:400;background:var(--md-raised);border:1px solid var(--md-border);border-radius:10px;padding:1px 8px;margin-left:4px" title="Versão do painel — se parecer desatualizado, dê Ctrl+Shift+R">v2026-11-10.1</span><span class="thm" id="thmSel" title="Tema do painel"><button type="button" data-thm="neon"><i style="background:#00e5ff;box-shadow:0 0 6px #00e5ff"></i>Neon</button><button type="button" data-thm="glass"><i style="background:linear-gradient(135deg,#7c8cff,#c58bff)"></i>Glass</button><button type="button" data-thm="holo"><i style="background:linear-gradient(135deg,#5b5bf7,#00c8ff,#ff5ec4)"></i>Holo</button></span></h1>
+    <h1><span class="dot"></span>Meta Ads &mdash; Painel <span id="appVer" style="font-size:11px;color:var(--md-muted);font-weight:400;background:var(--md-raised);border:1px solid var(--md-border);border-radius:10px;padding:1px 8px;margin-left:4px" title="Versão do painel — se parecer desatualizado, dê Ctrl+Shift+R">v2026-11-10.2</span><span class="thm" id="thmSel" title="Tema do painel"><button type="button" data-thm="neon"><i style="background:#00e5ff;box-shadow:0 0 6px #00e5ff"></i>Neon</button><button type="button" data-thm="glass"><i style="background:linear-gradient(135deg,#7c8cff,#c58bff)"></i>Glass</button><button type="button" data-thm="holo"><i style="background:linear-gradient(135deg,#5b5bf7,#00c8ff,#ff5ec4)"></i>Holo</button></span></h1>
     <div class="hdr-r">
       <div class="tabs">
         <button class="tab-btn on" data-tab="resumo">&#9889; Resumo</button>
@@ -4727,14 +4727,16 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
       .then(function(r){ return r.json(); })
       .then(function(d) {
         var rows = d.items || d.data || d.report || (Array.isArray(d) ? d : []); if (!Array.isArray(rows)) rows = [];
-        var rep = { sales: 0, rev: 0, byId: {}, byName: {} };
+        /* Faturamento = Revenue REAL do RedTrack (comissao varia por venda) — sem estimar por comissao fixa. */
+        var rep = { sales: 0, rev: 0, byId: {}, byName: {}, rows: [], noRev: 0 };
         rows.forEach(function(row) {
           var s = parseInt(row['convtype' + pType]) || parseInt(row.approved) || 0;
           var v = parseFloat(row.revenue) || parseFloat(row['revenuetype' + pType]) || parseFloat(row.total_revenue) || 0;
-          if (!v && s) v = s * RULES.commission;
           rep.sales += s; rep.rev += v;
-          var x = { sales: s, rev: v };
-          if (row.sub3 != null && row.sub3 !== '') rep.byId[String(row.sub3)] = x;
+          var x = { sales: s, rev: v, id: row.sub3 != null ? String(row.sub3) : '' };
+          if (s && !v) rep.noRev += s;
+          rep.rows.push(x);
+          if (x.id) rep.byId[x.id] = x;
           var nm = (row.campaign || row.campaign_name || row.title || '').toLowerCase(); if (nm) rep.byName[nm] = x;
         });
         RS.rep[key] = rep;
@@ -4787,18 +4789,30 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     for (k in rep.byName) { if (parts.some(function(p){ return p.length > 3 && k.indexOf(p) >= 0; })) return rep.byName[k]; }
     return null;
   }
+  /* So conta vendas do RedTrack cujo sub3 = ID de campanha das contas do Meta (outras fontes/ofertas ficam fora).
+     Se NENHUMA linha casar (sub3 nao configurado), usa o total do RedTrack e avisa. */
+  function rsMatch(rep) {
+    var m = { on: false, sales: rep ? rep.sales : 0, rev: rep ? rep.rev : 0, unSales: 0, unRev: 0 };
+    if (!rep || !rep.rows || !rep.rows.length) return m;
+    var s = 0, v = 0, us = 0, uv = 0, camps = RS.base.camps;
+    rep.rows.forEach(function(x) { if (x.id && camps[x.id]) { s += x.sales; v += x.rev; } else { us += x.sales; uv += x.rev; } });
+    if (!s && !v) return m;
+    return { on: true, sales: s, rev: v, unSales: us, unRev: uv };
+  }
+  function rsEvOk(e, on) { return !on || (e.id && RS.base.camps[e.id]); }
   function rsTotals(rg, cut, cutMs) {
     var b = RS.base, spend = 0, camps = [];
     Object.keys(b.camps).forEach(function(id) { var c = b.camps[id], sp = rsCampSpend(c, rg, cut); spend += sp; camps.push({ c: c, spend: sp }); });
-    var rep = rsRep(rg), sales = rep ? rep.sales : 0, rev = rep ? rep.rev : 0;
+    var rep = rsRep(rg), mt = rsMatch(rep), sales = mt.sales, rev = mt.rev;
     if (rep && cutMs != null) { /* dia parcial: proporcao das vendas ate o mesmo horario */
-      var ev = rsEv(rg), n = 0, r = 0, any = false;
+      var ev = rsEv(rg).filter(function(e){ return rsEvOk(e, mt.on); }), n = 0, r = 0, any = false;
       ev.forEach(function(e) { if (e.ms <= cutMs) { n++; r += e.rev; } if (e.rev) any = true; });
       var tot = ev.length || 1;
       rev = any ? r : rev * (n / tot); sales = ev.length ? n : sales;
     }
     camps.forEach(function(x) { var cv = rsCampConv(x.c, rep); x.sales = cv ? cv.sales : 0; x.rev = cv ? cv.rev : 0; x.profit = x.rev - x.spend; });
-    return { spend: spend, rev: rev, sales: sales, profit: rev - spend, roas: spend > 0 ? rev / spend : 0, cpa: sales > 0 ? spend / sales : 0, camps: camps, hasConv: !!rep && !rep.err, convErr: rep && rep.err };
+    return { spend: spend, rev: rev, sales: sales, profit: rev - spend, roas: spend > 0 ? rev / spend : 0, cpa: sales > 0 ? spend / sales : 0, camps: camps, hasConv: !!rep && !rep.err, convErr: rep && rep.err,
+      match: mt, noRev: rep && rep.noRev || 0, rtRows: rep && rep.rows ? rep.rows.length : 0 };
   }
   function rsCompute() {
     var r = rsRanges(RS.period), now = Date.now(), cut = null, cutMs = null;
@@ -4836,6 +4850,10 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
   function rsAlerts(m) {
     var cfg = rsCfg(), out = [], b = RS.base;
     if (m.cur.convErr) out.push({ lv: 'warn', ic: '&#128268;', t: 'Fonte de vendas com erro', d: rsEsc(m.cur.convErr) });
+    var mt = m.cur.match;
+    if (mt.on && mt.unSales > 0) out.push({ lv: 'info', ic: '&#128279;', t: 'Vendas de fora do Meta', d: mt.unSales + ' venda(s) (' + rsMoney(mt.unRev) + ') no RedTrack não são das suas campanhas do Meta. Ficaram fora do lucro.' });
+    if (!mt.on && m.cur.rtRows && m.cur.sales > 0) out.push({ lv: 'warn', ic: '&#128279;', t: 'Vendas não casaram com as campanhas', d: 'O sub3 do RedTrack não bate com o ID das campanhas do Meta. O faturado é o total do RedTrack, inclusive de outras fontes.' });
+    if (m.cur.noRev > 0) out.push({ lv: 'warn', ic: '&#128176;', t: 'Vendas sem receita', d: m.cur.noRev + ' venda(s) sem valor (Revenue) no RedTrack. Não entram no faturado.' });
     if (!rsSrc()) out.push({ lv: 'info', ic: '&#128268;', t: 'Sem fonte de vendas', d: 'Coloque o token do RedTrack ou da UTMify em &#9881; Tokens para ver faturamento, vendas e lucro.' });
     RS.tokErr.forEach(function(e){ out.push({ lv: 'crit', ic: '&#128273;', t: 'Token com falha', d: rsEsc(e) }); });
     b.accts.forEach(function(a) {
@@ -4863,7 +4881,8 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
 
   /* ── Grafico de vendas (por hora em Hoje/Ontem, por dia em 7d/Mes) — barras = periodo, linha = comparativo ── */
   function rsChartData(m) {
-    var r = m.r, cur = rsEv(r.cur), prev = rsEv(r.prev), single = r.cur.since === r.cur.until, n, lab, idx;
+    var r = m.r, onC = m.cur.match.on, onP = rsMatch(rsRep(r.prev)).on;
+    var cur = rsEv(r.cur).filter(function(e){ return rsEvOk(e, onC); }), prev = rsEv(r.prev).filter(function(e){ return rsEvOk(e, onP); }), single = r.cur.since === r.cur.until, n, lab, idx;
     if (single) {
       n = 24; lab = function(i){ return i + 'h'; };
       idx = function(e, rg){ var d = new Date(e.ms - 3 * 3600 * 1000); return rsDay(d) === rg.since ? d.getUTCHours() : -1; };
