@@ -419,11 +419,57 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
   #mdb .rs-run b{font-size:20px}
   #mdb .rs-card.run{grid-column:1/-1}
 }
+/* funil */
+#mdb .rs-fun-w{margin-bottom:12px}
+#mdb .rs-fun{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+#mdb .rs-fs{position:relative;background:color-mix(in srgb,var(--md-bg) 45%,transparent);border:1px solid var(--md-border);border-radius:12px;padding:12px 14px;min-width:0}
+#mdb .rs-fs.gg{border:1px dashed color-mix(in srgb,var(--md-red) 65%,transparent);background:color-mix(in srgb,var(--md-red) 7%,transparent)}
+#mdb .rs-fr{display:flex;align-items:center;flex-wrap:wrap;gap:5px;min-height:22px;margin-bottom:10px;font-size:11px;color:var(--md-muted)}
+#mdb .rs-fr b{font-size:14px;color:var(--md-text)}
+#mdb .rs-fa{color:var(--md-accent);font-size:14px;line-height:1}
+#mdb .rs-fs.gg .rs-fa{color:var(--md-red)}
+#mdb .rs-fr em{font-style:normal;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--md-red);background:color-mix(in srgb,var(--md-red) 14%,transparent);padding:2px 6px;border-radius:999px}
+#mdb .rs-fv{font-size:24px;font-weight:750;color:var(--md-text);margin:10px 0 8px;white-space:nowrap}
+#mdb .rs-fb{height:6px;border-radius:999px;background:var(--md-raised);overflow:hidden}
+#mdb .rs-fb i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--md-accent),var(--md-purple))}
+#mdb .rs-fc{font-size:11.5px;color:var(--md-muted);margin-top:8px}
+#mdb .rs-fc b{color:var(--md-text)}
+#mdb .rs-ftip{margin-top:12px;font-size:12.5px;color:var(--md-text);background:color-mix(in srgb,var(--md-amber) 10%,transparent);border:1px solid color-mix(in srgb,var(--md-amber) 35%,transparent);border-radius:10px;padding:9px 12px}
+#mdb .rs-sub b{color:var(--md-text)}
+/* lucro por oferta/conta */
+#mdb .rs-grp{margin-bottom:12px}
+#mdb .rs-grp .rs-pt .rs-sub{font-weight:400;margin-left:6px}
+#mdb .rs-seg.sm{padding:3px}
+#mdb .rs-seg.sm button{padding:6px 12px;font-size:12px}
+#mdb .rs-link.sm{font-size:12px;font-weight:600}
+#mdb .rs-tw{overflow-x:auto;margin:0 -4px;scrollbar-width:thin;scrollbar-color:var(--md-border2) transparent}#mdb .rs-tw::-webkit-scrollbar{height:6px;background:transparent}#mdb .rs-tw::-webkit-scrollbar-thumb{background:var(--md-border2);border-radius:6px}
+#mdb table.rs-t{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+#mdb .rs-t th{position:static;background:transparent;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--md-muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--md-border);white-space:nowrap}
+#mdb .rs-t td{padding:10px;border-bottom:1px solid var(--md-border);white-space:nowrap;color:var(--md-text)}
+#mdb .rs-t .r{text-align:right}
+#mdb .rs-t tr:hover td{background:transparent}
+#mdb .rs-t tr.rs-g{cursor:pointer}
+#mdb .rs-t tr.rs-g:hover td{background:var(--md-raised)}
+#mdb .rs-t tr.rs-g td:first-child b{font-weight:700}
+#mdb .rs-car{display:inline-block;width:14px;color:var(--md-muted);transition:transform .15s}
+#mdb .rs-t tr.open .rs-car{transform:rotate(90deg);color:var(--md-accent)}
+#mdb .rs-nc{font-size:11px;color:var(--md-muted);margin-left:8px}
+#mdb .rs-t tr.rs-gc td{font-size:12px;background:color-mix(in srgb,var(--md-bg) 40%,transparent);color:var(--md-muted)}
+#mdb .rs-t tr.rs-gc td:first-child{padding-left:30px;max-width:340px;overflow:hidden;text-overflow:ellipsis}
+#mdb .rs-t tr.rs-gc a{color:var(--md-text);text-decoration:none}
+#mdb .rs-t tr.rs-gc a:hover{color:var(--md-accent)}
+#mdb .rs-pc{position:relative;min-width:110px}
+#mdb .rs-pc span{position:relative;z-index:1;font-weight:700}
+#mdb .rs-pbar{position:absolute;right:10px;bottom:4px;height:3px;border-radius:999px;max-width:calc(100% - 20px)}
+#mdb .rs-pbar.pos{background:var(--md-green)}
+#mdb .rs-pbar.neg{background:var(--md-red)}
+#mdb .rs-t tfoot td{font-weight:700;border-bottom:0;border-top:1px solid var(--md-border2)}
+#mdb .rs-cfg label.wide{grid-column:1/-1}
 </style>
 <div id="mdb">
   <div id="alertBox" class="alert-box" style="display:none"></div>
   <div class="hdr">
-    <h1><span class="dot"></span>Meta Ads &mdash; Painel <span id="appVer" style="font-size:11px;color:var(--md-muted);font-weight:400;background:var(--md-raised);border:1px solid var(--md-border);border-radius:10px;padding:1px 8px;margin-left:4px" title="Versão do painel — se parecer desatualizado, dê Ctrl+Shift+R">v2026-11-10.2</span><span class="thm" id="thmSel" title="Tema do painel"><button type="button" data-thm="neon"><i style="background:#00e5ff;box-shadow:0 0 6px #00e5ff"></i>Neon</button><button type="button" data-thm="glass"><i style="background:linear-gradient(135deg,#7c8cff,#c58bff)"></i>Glass</button><button type="button" data-thm="holo"><i style="background:linear-gradient(135deg,#5b5bf7,#00c8ff,#ff5ec4)"></i>Holo</button></span></h1>
+    <h1><span class="dot"></span>Meta Ads &mdash; Painel <span id="appVer" style="font-size:11px;color:var(--md-muted);font-weight:400;background:var(--md-raised);border:1px solid var(--md-border);border-radius:10px;padding:1px 8px;margin-left:4px" title="Versão do painel — se parecer desatualizado, dê Ctrl+Shift+R">v2026-11-10.3</span><span class="thm" id="thmSel" title="Tema do painel"><button type="button" data-thm="neon"><i style="background:#00e5ff;box-shadow:0 0 6px #00e5ff"></i>Neon</button><button type="button" data-thm="glass"><i style="background:linear-gradient(135deg,#7c8cff,#c58bff)"></i>Glass</button><button type="button" data-thm="holo"><i style="background:linear-gradient(135deg,#5b5bf7,#00c8ff,#ff5ec4)"></i>Holo</button></span></h1>
     <div class="hdr-r">
       <div class="tabs">
         <button class="tab-btn on" data-tab="resumo">&#9889; Resumo</button>
@@ -4621,6 +4667,11 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
   }
   function rsWinSince() { var t = rsToday(), a = shiftDay(t, -13), lm1 = shiftDay(t.slice(0, 8) + '01', -1).slice(0, 8) + '01'; return a < lm1 ? a : lm1; }
 
+  function rsZ24() { return [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; }
+  /* Campanha na base: gasto/impressoes/cliques por HORA (dia BR) e por DIA (fuso da conta). */
+  function rsCamp(base, id, name, a) {
+    return base.camps[id] || (base.camps[id] = { id: id, name: name || id, acctId: a.id, acctName: a.name, status: '', issues: null, hours: {}, hImp: {}, hClk: {}, days: {}, dImp: {}, dClk: {} });
+  }
   /* ── Base: contas + campanhas ativas + gasto por hora (4 dias) + anuncios reprovados ── */
   function rsLoadBase() {
     var tks = getTks(), map = {}, t = rsToday(), win = rsWinSince();
@@ -4644,15 +4695,13 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
       var base = { accts: accts, camps: {}, badAds: [], at: Date.now() };
       var hr = encodeURIComponent(JSON.stringify({ since: shiftDay(t, -3), until: shiftDay(t, 1) }));
       var st = encodeURIComponent('["ACTIVE","WITH_ISSUES","IN_PROCESS"]'), adSt = encodeURIComponent('["DISAPPROVED","WITH_ISSUES"]');
-      function camp(id, name, a) {
-        return base.camps[id] || (base.camps[id] = { id: id, name: name || id, acctId: a.id, acctName: a.name, status: '', issues: null, hours: {}, days: {} });
-      }
+      function camp(id, name, a) { return rsCamp(base, id, name, a); }
       function one(a) {
         var tk = a._tk, off = Number(a.timezone_offset_hours_utc) || 0, rate = a.currency === 'BRL' ? 1 / getFx() : 1;
         a._rate = rate;
         return Promise.all([
           fjPaged(API + '/' + a.id + '/campaigns?fields=name,effective_status,issues_info&effective_status=' + st + '&limit=200&access_token=' + tk),
-          fjPagedE(API + '/' + a.id + '/insights?level=campaign&fields=campaign_id,campaign_name,spend&time_increment=1&breakdowns=hourly_stats_aggregated_by_advertiser_time_zone&time_range=' + hr + '&limit=500&access_token=' + tk),
+          fjPagedE(API + '/' + a.id + '/insights?level=campaign&fields=campaign_id,campaign_name,spend,impressions,inline_link_clicks&time_increment=1&breakdowns=hourly_stats_aggregated_by_advertiser_time_zone&time_range=' + hr + '&limit=500&access_token=' + tk),
           fjPaged(API + '/' + a.id + '/ads?fields=name,effective_status,campaign_id&effective_status=' + adSt + '&limit=100&access_token=' + tk)
         ]).then(function(r) {
           (r[0] || []).forEach(function(c) { var o = camp(c.id, c.name, a); o.name = c.name; o.status = (c.effective_status || '').toUpperCase(); o.issues = c.issues_info || null; });
@@ -4662,8 +4711,9 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
             var utc = Date.parse(row.date_start + 'T' + ('0' + hh).slice(-2) + ':00:00Z') - off * 3600 * 1000;
             var br = new Date(utc - 3 * 3600 * 1000), d = rsDay(br), h = br.getUTCHours();
             var o = camp(row.campaign_id, row.campaign_name, a);
-            var arr = o.hours[d] || (o.hours[d] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
-            arr[h] += (parseFloat(row.spend) || 0) * rate;
+            (o.hours[d] || (o.hours[d] = rsZ24()))[h] += (parseFloat(row.spend) || 0) * rate;
+            (o.hImp[d] || (o.hImp[d] = rsZ24()))[h] += parseInt(row.impressions) || 0;
+            (o.hClk[d] || (o.hClk[d] = rsZ24()))[h] += parseInt(row.inline_link_clicks) || 0;
           });
           (r[2] || []).forEach(function(ad) { base.badAds.push({ name: ad.name, status: (ad.effective_status || '').toUpperCase(), cid: ad.campaign_id, acct: a.name }); });
         });
@@ -4682,10 +4732,12 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     var b = RS.base, tr = encodeURIComponent(JSON.stringify({ since: rsWinSince(), until: rsToday() }));
     var i = 0;
     function one(a) {
-      return fjPaged(API + '/' + a.id + '/insights?level=campaign&fields=campaign_id,campaign_name,spend&time_increment=1&time_range=' + tr + '&limit=500&access_token=' + a._tk).then(function(rows) {
+      return fjPaged(API + '/' + a.id + '/insights?level=campaign&fields=campaign_id,campaign_name,spend,impressions,inline_link_clicks&time_increment=1&time_range=' + tr + '&limit=500&access_token=' + a._tk).then(function(rows) {
         rows.forEach(function(row) {
-          var o = b.camps[row.campaign_id] || (b.camps[row.campaign_id] = { id: row.campaign_id, name: row.campaign_name, acctId: a.id, acctName: a.name, status: '', issues: null, hours: {}, days: {} });
-          o.days[row.date_start] = (o.days[row.date_start] || 0) + (parseFloat(row.spend) || 0) * (a._rate || 1);
+          var o = rsCamp(b, row.campaign_id, row.campaign_name, a), d = row.date_start;
+          o.days[d] = (o.days[d] || 0) + (parseFloat(row.spend) || 0) * (a._rate || 1);
+          o.dImp[d] = (o.dImp[d] || 0) + (parseInt(row.impressions) || 0);
+          o.dClk[d] = (o.dClk[d] || 0) + (parseInt(row.inline_link_clicks) || 0);
         });
       });
     }
@@ -4706,9 +4758,10 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
       .then(function(r){ return r.json(); })
       .then(function(d) {
         var orders = d.data || d.orders || d || []; if (!Array.isArray(orders)) orders = [];
-        var rep = { sales: 0, rev: 0, byId: {}, byName: {} }, ev = [];
+        var rep = { sales: 0, rev: 0, ic: 0, byId: {}, byName: {} }, ev = [];
         orders.forEach(function(o) {
           var s = (o.status || o.payment_status || '').toLowerCase();
+          if (o.event_type === 'InitiateCheckout' || o.initiated_checkout) rep.ic++;
           if (s !== 'approved' && s !== 'paid' && s !== 'completed') return;
           var v = parseFloat(o.value || o.total || o.amount || 0) || 0, nm = (o.utm_campaign || o.campaign_name || '').toLowerCase();
           rep.sales++; rep.rev += v;
@@ -4722,18 +4775,19 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
   function rsRtReport(rg) {
     var key = 'r' + rg.since + rg.until;
     if (RS.rep[key]) return Promise.resolve();
-    var tk = getRtTk(), pType = getRtPType() || '1';
+    var tk = getRtTk(), pType = getRtPType() || '1', icType = getRtICType() || '2';
     return fetch(RT_API + '/report?api_key=' + encodeURIComponent(tk) + '&group=sub3&date_from=' + rg.since + '&date_to=' + rg.until + '&per=1000', { headers: { 'Accept': 'application/json' } })
       .then(function(r){ return r.json(); })
       .then(function(d) {
         var rows = d.items || d.data || d.report || (Array.isArray(d) ? d : []); if (!Array.isArray(rows)) rows = [];
         /* Faturamento = Revenue REAL do RedTrack (comissao varia por venda) — sem estimar por comissao fixa. */
-        var rep = { sales: 0, rev: 0, byId: {}, byName: {}, rows: [], noRev: 0 };
+        var rep = { sales: 0, rev: 0, ic: 0, byId: {}, byName: {}, rows: [], noRev: 0 };
         rows.forEach(function(row) {
           var s = parseInt(row['convtype' + pType]) || parseInt(row.approved) || 0;
           var v = parseFloat(row.revenue) || parseFloat(row['revenuetype' + pType]) || parseFloat(row.total_revenue) || 0;
-          rep.sales += s; rep.rev += v;
-          var x = { sales: s, rev: v, id: row.sub3 != null ? String(row.sub3) : '' };
+          var ic = parseInt(row['convtype' + icType]) || 0;
+          rep.sales += s; rep.rev += v; rep.ic += ic;
+          var x = { sales: s, rev: v, ic: ic, id: row.sub3 != null ? String(row.sub3) : '' };
           if (s && !v) rep.noRev += s;
           rep.rows.push(x);
           if (x.id) rep.byId[x.id] = x;
@@ -4776,11 +4830,14 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     for (var h = 0; h < 24; h++) { if (cut == null || h < Math.floor(cut)) s += arr[h]; else if (h === Math.floor(cut)) { s += arr[h] * (cut - h); break; } else break; }
     return s;
   }
-  function rsCampSpend(c, rg, cut) {
-    if (rg.since === rg.until) return rsSumHours(c.hours[rg.since], cut);
-    var s = 0; for (var d in c.days) if (d >= rg.since && d <= rg.until) s += c.days[d];
+  /* kind: 's' gasto | 'i' impressoes | 'k' cliques no link */
+  function rsCampSum(c, rg, cut, kind) {
+    var H = kind === 'i' ? c.hImp : kind === 'k' ? c.hClk : c.hours, D = kind === 'i' ? c.dImp : kind === 'k' ? c.dClk : c.days;
+    if (rg.since === rg.until) return rsSumHours(H[rg.since], cut);
+    var s = 0; for (var d in D) if (d >= rg.since && d <= rg.until) s += D[d];
     return s;
   }
+  function rsCampSpend(c, rg, cut) { return rsCampSum(c, rg, cut, 's'); }
   function rsCampConv(c, rep) {
     if (!rep) return null;
     var f = rep.byId[String(c.id)]; if (f) return f;
@@ -4792,26 +4849,31 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
   /* So conta vendas do RedTrack cujo sub3 = ID de campanha das contas do Meta (outras fontes/ofertas ficam fora).
      Se NENHUMA linha casar (sub3 nao configurado), usa o total do RedTrack e avisa. */
   function rsMatch(rep) {
-    var m = { on: false, sales: rep ? rep.sales : 0, rev: rep ? rep.rev : 0, unSales: 0, unRev: 0 };
+    var m = { on: false, sales: rep ? rep.sales : 0, rev: rep ? rep.rev : 0, ic: rep ? rep.ic || 0 : 0, unSales: 0, unRev: 0 };
     if (!rep || !rep.rows || !rep.rows.length) return m;
-    var s = 0, v = 0, us = 0, uv = 0, camps = RS.base.camps;
-    rep.rows.forEach(function(x) { if (x.id && camps[x.id]) { s += x.sales; v += x.rev; } else { us += x.sales; uv += x.rev; } });
-    if (!s && !v) return m;
-    return { on: true, sales: s, rev: v, unSales: us, unRev: uv };
+    var s = 0, v = 0, ic = 0, us = 0, uv = 0, camps = RS.base.camps;
+    rep.rows.forEach(function(x) { if (x.id && camps[x.id]) { s += x.sales; v += x.rev; ic += x.ic || 0; } else { us += x.sales; uv += x.rev; } });
+    if (!s && !v && !ic) return m;
+    return { on: true, sales: s, rev: v, ic: ic, unSales: us, unRev: uv };
   }
   function rsEvOk(e, on) { return !on || (e.id && RS.base.camps[e.id]); }
   function rsTotals(rg, cut, cutMs) {
-    var b = RS.base, spend = 0, camps = [];
-    Object.keys(b.camps).forEach(function(id) { var c = b.camps[id], sp = rsCampSpend(c, rg, cut); spend += sp; camps.push({ c: c, spend: sp }); });
-    var rep = rsRep(rg), mt = rsMatch(rep), sales = mt.sales, rev = mt.rev;
+    var b = RS.base, spend = 0, spFull = 0, imp = 0, clk = 0, camps = [];
+    Object.keys(b.camps).forEach(function(id) {
+      var c = b.camps[id], sp = rsCampSpend(c, rg, cut), im = rsCampSum(c, rg, cut, 'i'), ck = rsCampSum(c, rg, cut, 'k');
+      spend += sp; imp += im; clk += ck; if (cut != null) spFull += rsCampSpend(c, rg);
+      camps.push({ c: c, spend: sp, imp: im, clk: ck });
+    });
+    var rep = rsRep(rg), mt = rsMatch(rep), sales = mt.sales, rev = mt.rev, ic = mt.ic;
+    if (cut != null && spFull > 0) ic = Math.round(ic * spend / spFull); /* IC ate o mesmo horario ~ proporcional ao gasto */
     if (rep && cutMs != null) { /* dia parcial: proporcao das vendas ate o mesmo horario */
       var ev = rsEv(rg).filter(function(e){ return rsEvOk(e, mt.on); }), n = 0, r = 0, any = false;
       ev.forEach(function(e) { if (e.ms <= cutMs) { n++; r += e.rev; } if (e.rev) any = true; });
       var tot = ev.length || 1;
       rev = any ? r : rev * (n / tot); sales = ev.length ? n : sales;
     }
-    camps.forEach(function(x) { var cv = rsCampConv(x.c, rep); x.sales = cv ? cv.sales : 0; x.rev = cv ? cv.rev : 0; x.profit = x.rev - x.spend; });
-    return { spend: spend, rev: rev, sales: sales, profit: rev - spend, roas: spend > 0 ? rev / spend : 0, cpa: sales > 0 ? spend / sales : 0, camps: camps, hasConv: !!rep && !rep.err, convErr: rep && rep.err,
+    camps.forEach(function(x) { var cv = rsCampConv(x.c, rep); x.sales = cv ? cv.sales : 0; x.rev = cv ? cv.rev : 0; x.ic = cv ? cv.ic || 0 : 0; x.profit = x.rev - x.spend; });
+    return { spend: spend, rev: rev, sales: sales, imp: imp, clk: clk, ic: ic, profit: rev - spend, roas: spend > 0 ? rev / spend : 0, cpa: sales > 0 ? spend / sales : 0, camps: camps, hasConv: !!rep && !rep.err, convErr: rep && rep.err,
       match: mt, noRev: rep && rep.noRev || 0, rtRows: rep && rep.rows ? rep.rows.length : 0 };
   }
   function rsCompute() {
@@ -4930,6 +4992,7 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     if (money) return '<span class="rs-d ' + cls + '">' + arrow + ' ' + (diff >= 0 ? '+' : '') + rsMoney(diff) + '</span>';
     if (!prev) return '<span class="rs-d ' + cls + '">novo</span>';
     var pct = diff / Math.abs(prev) * 100;
+    if (Math.abs(pct) < 0.05) return '<span class="rs-d flat">&#8594; 0%</span>';
     return '<span class="rs-d ' + cls + '">' + arrow + ' ' + (pct >= 0 ? '+' : '') + pct.toFixed(Math.abs(pct) < 10 ? 1 : 0).replace('.', ',') + '%</span>';
   }
   function rsCard(ic, lbl, val, delta, sub, extra) {
@@ -5008,8 +5071,103 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     var ranks = '<div class="rs-row two"><div class="rs-panel"><div class="rs-ph"><div class="rs-pt">&#127942; Top 3 campanhas</div><span class="rs-sub">por lucro</span></div>' + rk(best, 'top') + '</div>' +
       '<div class="rs-panel"><div class="rs-ph"><div class="rs-pt">&#128201; Piores 3 campanhas</div><span class="rs-sub">' + (conv ? 'por lucro' : 'por gasto') + '</span></div>' + rk(worst, 'bot') + '</div></div>';
     var foot = '<div class="rs-foot">Atualizado às ' + hhmmBR(RS.base.at) + ' &middot; ' + RS.base.accts.length + ' contas com gasto recente &middot; vendas via ' + (rsSrc() === 'rt' ? 'RedTrack' : rsSrc() === 'utm' ? 'UTMify' : '&mdash;') + (RS.period === '7d' || RS.period === 'month' ? ' &middot; gasto diário no fuso de cada conta' : ' &middot; horários no fuso de Brasília') + (RS.err ? ' &middot; <span class="neg">' + rsEsc(RS.err) + '</span>' : '') + '</div>';
-    root.innerHTML = top + cfgHtml + hero + cards + '<div class="rs-row">' + chart + alerts + '</div>' + ranks + foot;
+    root.innerHTML = top + cfgHtml + hero + cards + rsFunnelHtml(m) + '<div class="rs-row">' + chart + alerts + '</div>' + rsGroupsHtml(m) + ranks + foot;
     rsBind(cd);
+  }
+  function rsNum(v) {
+    v = +v || 0;
+    if (v >= 1e6) return (v / 1e6).toFixed(1).replace('.', ',') + ' mi';
+    if (v >= 1e4) return (v / 1e3).toFixed(1).replace('.', ',') + ' mil';
+    return Math.round(v).toLocaleString('pt-BR');
+  }
+  function rsPct(v, dec) { return (v * 100).toFixed(dec == null ? 1 : dec).replace('.', ',') + '%'; }
+
+  /* ── FUNIL: impressoes -> cliques no link -> checkouts (IC RedTrack) -> vendas ── */
+  function rsFunnelHtml(m) {
+    var c = m.cur, p = m.prev, conv = c.hasConv, hasIc = conv && (c.ic > 0 || p.ic > 0);
+    var st = [
+      { l: 'Impressões', ic: '&#128064;', v: c.imp, cost: c.imp ? c.spend / c.imp * 1000 : 0, cl: 'CPM' },
+      { l: 'Cliques no link', ic: '&#128433;&#65039;', v: c.clk, cost: c.clk ? c.spend / c.clk : 0, cl: 'CPC' }
+    ];
+    var rates = [{ l: 'CTR', v: c.imp ? c.clk / c.imp : 0, pv: p.imp ? p.clk / p.imp : 0, dec: 2 }];
+    if (hasIc) {
+      st.push({ l: 'Checkouts', ic: '&#128722;', v: c.ic, cost: c.ic ? c.spend / c.ic : 0, cl: 'custo/IC' });
+      rates.push({ l: 'clique &#8594; checkout', v: c.clk ? c.ic / c.clk : 0, pv: p.clk ? p.ic / p.clk : 0 });
+      rates.push({ l: 'checkout &#8594; venda', v: c.ic ? c.sales / c.ic : 0, pv: p.ic ? p.sales / p.ic : 0 });
+    } else {
+      rates.push({ l: 'clique &#8594; venda', v: c.clk ? c.sales / c.clk : 0, pv: p.clk ? p.sales / p.clk : 0, dec: 2 });
+    }
+    st.push({ l: 'Vendas', ic: '&#128176;', v: conv ? c.sales : null, cost: c.sales ? c.spend / c.sales : 0, cl: 'CPA' });
+    /* gargalo = etapa cuja taxa mais caiu vs o periodo anterior (queda >= 10%) */
+    var worst = -1, wv = -0.1;
+    rates.forEach(function(r, i) { if (r.pv > 0 && (conv || i === 0)) { var d = (r.v - r.pv) / r.pv; if (d < wv) { wv = d; worst = i; } } });
+    var max = 1; st.forEach(function(s){ if (s.v > max) max = s.v; });
+    var html = '';
+    st.forEach(function(s, i) {
+      var w = s.v ? 18 + 82 * Math.log10(s.v + 1) / Math.log10(max + 1) : 6, r = rates[i - 1], gg = worst >= 0 && i - 1 === worst, show = r && (conv || i === 1);
+      html += '<div class="rs-fs' + (gg ? ' gg' : '') + '">' +
+        '<div class="rs-fr">' + (r ? '<span class="rs-fa">&#8627;</span><b>' + (show ? rsPct(r.v, r.dec || 1) : '&mdash;') + '</b><span>' + r.l + '</span>' + (show && r.pv ? rsDelta(r.v, r.pv, true) : '') + (gg ? '<em>gargalo</em>' : '') : '<span>topo do funil</span>') + '</div>' +
+        '<div class="rs-cl"><span class="rs-ic">' + s.ic + '</span>' + s.l + '</div>' +
+        '<div class="rs-fv">' + (s.v == null ? '<span class="rs-na">&mdash;</span>' : rsNum(s.v)) + '</div>' +
+        '<div class="rs-fb"><i style="width:' + w + '%"></i></div>' +
+        '<div class="rs-fc">' + s.cl + ' <b>' + (s.cost && s.v != null ? rsMoney(s.cost) : '&mdash;') + '</b></div></div>';
+    });
+    var overall = conv && c.clk ? '<span class="rs-sub">conversão geral <b>' + rsPct(c.sales / c.clk, 2) + '</b> dos cliques</span>' : '';
+    return '<div class="rs-panel rs-fun-w"><div class="rs-ph"><div class="rs-pt">&#129514; Funil &middot; ' + rsRanges(RS.period).lbl + '</div>' + overall + '</div>' +
+      '<div class="rs-fun n' + st.length + '">' + html + '</div>' +
+      (worst >= 0 && conv ? '<div class="rs-ftip">&#128161; ' + rsFunnelTip(rates[worst].l, hasIc) + '</div>' : '') + '</div>';
+  }
+  function rsFunnelTip(l, hasIc) {
+    if (l === 'CTR') return 'O CTR caiu: os criativos estão chamando menos atenção. Vale testar ganchos e criativos novos.';
+    if (l.indexOf('checkout &#8594;') === 0) return 'Mais gente desistindo no checkout: confira o checkout, os meios de pagamento e a oferta.';
+    if (hasIc) return 'Menos cliques viram checkout: confira a página (velocidade, VSL, promessa alinhada com o anúncio).';
+    return 'Menos cliques viram venda: confira a página e o checkout.';
+  }
+
+  /* ── LUCRO POR OFERTA / POR CONTA ── */
+  var RS_STOP = { cbo: 1, abo: 1, teste: 1, test: 1, testes: 1, scale: 1, escala: 1, adv: 1, advantage: 1, campanha: 1, copia: 1, copy: 1, new: 1, novo: 1, nova: 1, br: 1, us: 1, usa: 1, eua: 1, wpp: 1, atv: 1, vsl: 1, ads: 1, conv: 1, vendas: 1, sales: 1, purchase: 1, compra: 1, broad: 1, aberto: 1, lal: 1, ret: 1, rmk: 1 };
+  function rsOfferOf(name, list) {
+    var n = (name || '').toLowerCase();
+    if (list.length) { for (var i = 0; i < list.length; i++) if (n.indexOf(list[i].toLowerCase()) >= 0) return list[i]; return 'Outras'; }
+    var t = n.split(/[\s\-_|\/\[\]().+:#,]+/).filter(function(w){ return w.length > 2 && !/^\d+$/.test(w) && !/^(ad|cp|c|v)\d+/.test(w) && !RS_STOP[w]; });
+    return t.length ? t[0].charAt(0).toUpperCase() + t[0].slice(1) : 'Outras';
+  }
+  function rsGroupsHtml(m) {
+    var cfg = rsCfg(), by = RS.grpBy || 'offer', conv = m.cur.hasConv;
+    var list = String(cfg.offers || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+    var g = {}, keys = [];
+    m.cur.camps.forEach(function(x) {
+      if (!(x.spend > 0.009 || x.rev > 0)) return;
+      var k = by === 'acct' ? (x.c.acctName || x.c.acctId) : rsOfferOf(x.c.name, list);
+      var o = g[k]; if (!o) { o = g[k] = { k: k, spend: 0, rev: 0, sales: 0, clk: 0, camps: [] }; keys.push(k); }
+      o.spend += x.spend; o.rev += x.rev; o.sales += x.sales; o.clk += x.clk; o.camps.push(x);
+    });
+    var rows = keys.map(function(k){ var o = g[k]; o.profit = o.rev - o.spend; return o; })
+      .sort(function(a, b){ return conv ? b.profit - a.profit : b.spend - a.spend; });
+    var maxAbs = 1; rows.forEach(function(o){ var v = Math.abs(conv ? o.profit : o.spend); if (v > maxAbs) maxAbs = v; });
+    RS.grpKeys = rows.map(function(o){ return by + '|' + o.k; });
+    function cells(o, isCamp) {
+      var pr = o.rev - o.spend, bw = Math.round(Math.abs(conv ? pr : o.spend) / maxAbs * 100);
+      return '<td class="r">' + rsMoney(o.spend, 0) + '</td><td class="r">' + (conv ? rsMoney(o.rev, 0) : '&mdash;') + '</td>' +
+        '<td class="r rs-pc">' + (conv ? '<span class="' + (pr >= 0 ? 'pos' : 'neg') + '">' + rsMoney(pr, 0) + '</span>' : '&mdash;') + (isCamp ? '' : '<i class="rs-pbar ' + (conv && pr < 0 ? 'neg' : 'pos') + '" style="width:' + bw + '%"></i>') + '</td>' +
+        '<td class="r">' + (conv && o.spend ? (o.rev / o.spend).toFixed(2).replace('.', ',') + 'x' : '&mdash;') + '</td>' +
+        '<td class="r">' + (conv ? o.sales : '&mdash;') + '</td><td class="r">' + (conv && o.sales ? rsMoney(o.spend / o.sales, 0) : '&mdash;') + '</td>' +
+        '<td class="r">' + (conv && o.clk ? rsPct(o.sales / o.clk, 2) : '&mdash;') + '</td>';
+    }
+    var body = '', T = { spend: 0, rev: 0, sales: 0, clk: 0 };
+    rows.forEach(function(o, i) {
+      T.spend += o.spend; T.rev += o.rev; T.sales += o.sales; T.clk += o.clk;
+      var open = !!(RS.grpOpen && RS.grpOpen[RS.grpKeys[i]]);
+      body += '<tr class="rs-g' + (open ? ' open' : '') + '" data-g="' + i + '"><td><span class="rs-car">&#9656;</span><b>' + rsEsc(o.k) + '</b><span class="rs-nc">' + o.camps.length + ' camp.</span></td>' + cells(o) + '</tr>';
+      if (open) o.camps.slice().sort(function(a, b){ return conv ? b.profit - a.profit : b.spend - a.spend; }).forEach(function(x) {
+        body += '<tr class="rs-gc"><td><a href="' + rsAdsLink(x.c) + '" target="_blank" rel="noopener">' + rsEsc(x.c.name) + '</a>' + (by === 'offer' ? '<span class="rs-nc">' + rsEsc(x.c.acctName || '') + '</span>' : '') + '</td>' + cells(x, true) + '</tr>';
+      });
+    });
+    var hint = by === 'offer' ? (list.length ? 'pelas ofertas da &#9881;' : 'pelo nome da campanha &middot; <button type="button" class="rs-link sm" id="rsOffSet">definir ofertas</button>') : 'por conta de anúncio';
+    return '<div class="rs-panel rs-grp"><div class="rs-ph"><div class="rs-pt">&#128202; Lucro por ' + (by === 'acct' ? 'conta' : 'oferta') + ' <span class="rs-sub">' + hint + '</span></div>' +
+      '<div class="rs-seg sm"><button type="button" data-rsg="offer"' + (by === 'offer' ? ' class="on"' : '') + '>Oferta</button><button type="button" data-rsg="acct"' + (by === 'acct' ? ' class="on"' : '') + '>Conta</button></div></div>' +
+      (rows.length ? '<div class="rs-tw"><table class="rs-t"><thead><tr><th>' + (by === 'acct' ? 'Conta' : 'Oferta') + '</th><th class="r">Gasto</th><th class="r">Faturado</th><th class="r">Lucro</th><th class="r">ROAS</th><th class="r">Vendas</th><th class="r">CPA</th><th class="r">Conv.</th></tr></thead><tbody>' + body + '</tbody>' +
+        '<tfoot><tr><td>Total</td>' + cells(T, true) + '</tr></tfoot></table></div>' : '<div class="rs-empty sm">Nenhum gasto neste período.</div>') + '</div>';
   }
   function rsBestHours(cd) {
     var idx = cd.a.map(function(v, i){ return [v, i]; }).filter(function(x){ return x[0] > 0; }).sort(function(a, b){ return b[0] - a[0]; }).slice(0, 3);
@@ -5028,6 +5186,7 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
       '<label>Teto de CPA (US$)<input id="rsCpa" type="number" min="0" step="1" value="' + c.cpa + '"></label>' +
       '<label>Meta de ROAS (x)<input id="rsRoas" type="number" min="0" step="0.05" value="' + c.roas + '"></label>' +
       '<label>Alerta: gasto sem venda acima de (US$)<input id="rsAS" type="number" min="0" step="5" value="' + c.alertSpend + '"></label>' +
+      '<label class="wide">Ofertas, separadas por vírgula (palavra que aparece no nome da campanha)<input id="rsOff" type="text" value="' + rsEsc(c.offers || '') + '" placeholder="ex: Memory, Keto, Joint"></label>' +
       '</div><div class="rs-cfg-f"><span>A meta da semana e do mês é a meta diária × dias.</span><button type="button" class="btn btn-blue" id="rsCfgSave">Salvar</button></div></div>';
   }
   function rsBind(cd) {
@@ -5036,6 +5195,9 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     var cb = document.getElementById('rsCfgBtn'); if (cb) cb.onclick = function(){ RS.cfgOpen = !RS.cfgOpen; document.getElementById('rsCfg').style.display = RS.cfgOpen ? 'block' : 'none'; };
     var gs = document.getElementById('rsGoalSet'); if (gs) gs.onclick = function(){ RS.cfgOpen = true; document.getElementById('rsCfg').style.display = 'block'; var i = document.getElementById('rsGV'); if (i) i.focus(); };
     var rl = document.getElementById('rsReload'); if (rl) rl.onclick = function(){ rsLoad(true); };
+    root.querySelectorAll('[data-rsg]').forEach(function(b) { b.onclick = function(){ RS.grpBy = this.getAttribute('data-rsg'); try { localStorage.setItem('rs_grp', RS.grpBy); } catch(e) {} rsRender(); }; });
+    root.querySelectorAll('tr[data-g]').forEach(function(tr) { tr.onclick = function(){ var k = RS.grpKeys[+this.getAttribute('data-g')]; RS.grpOpen = RS.grpOpen || {}; RS.grpOpen[k] = !RS.grpOpen[k]; rsRender(); }; });
+    var os = document.getElementById('rsOffSet'); if (os) os.onclick = function(){ RS.cfgOpen = true; document.getElementById('rsCfg').style.display = 'block'; var i = document.getElementById('rsOff'); if (i) { i.scrollIntoView({ block: 'center' }); i.focus(); } };
     var sv = document.getElementById('rsCfgSave');
     if (sv) sv.onclick = function() {
       var c = rsCfg();
@@ -5044,6 +5206,7 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
       c.cpa = parseFloat(document.getElementById('rsCpa').value) || c.cpa;
       c.roas = parseFloat(document.getElementById('rsRoas').value) || c.roas;
       c.alertSpend = parseFloat(document.getElementById('rsAS').value) || c.alertSpend;
+      c.offers = document.getElementById('rsOff').value.trim();
       rsSaveCfg(c); RS.cfgOpen = false; rsRender();
     };
     var ch = document.getElementById('rsChart'), tip = document.getElementById('rsTip');
@@ -5085,6 +5248,7 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
       .catch(function(e) { RS.err = (e && e.message) || 'falha ao carregar'; })
       .then(function() { RS.loading = false; rsRender(); });
   }
+  try { var _rg = localStorage.getItem('rs_grp'); if (_rg === 'acct' || _rg === 'offer') RS.grpBy = _rg; } catch(e) {}
   try { var _rp = localStorage.getItem('rs_period'); if (_rp && ['today', 'yesterday', '7d', 'month'].indexOf(_rp) >= 0) RS.period = _rp; } catch(e) {}
 
   document.querySelectorAll('#mdb .tab-btn').forEach(function(btn) {
