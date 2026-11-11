@@ -465,14 +465,65 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
 #mdb .rs-pbar.neg{background:var(--md-red)}
 #mdb .rs-t tfoot td{font-weight:700;border-bottom:0;border-top:1px solid var(--md-border2)}
 #mdb .rs-cfg label.wide{grid-column:1/-1}
+#mdb .rs-fx{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin-top:10px;padding:8px 10px;border-radius:10px;background:color-mix(in srgb,var(--md-accent) 9%,transparent);border:1px solid color-mix(in srgb,var(--md-accent) 30%,transparent)}
+#mdb .rs-fx>span:not(.rs-d){font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--md-muted);width:100%}
+#mdb .rs-fx>b{font-size:20px;font-weight:800;color:var(--md-text)}
+#mdb .rs-fx>i{font-style:normal;font-size:11px;color:var(--md-muted);width:100%}
+#mdb #iaRoot{font-variant-numeric:tabular-nums;max-width:1100px}
+#mdb .ia-per{font-size:12.5px;color:var(--md-muted)}
+#mdb .ia-per b{color:var(--md-text)}
+#mdb .ia-box{position:relative;background:radial-gradient(120% 160% at 0% 0%,color-mix(in srgb,var(--md-accent) 14%,transparent),transparent 60%),var(--md-panel);border:1px solid var(--md-border2);border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 10px 36px -20px color-mix(in srgb,var(--md-accent) 60%,transparent)}
+#mdb .ia-box textarea{width:100%;resize:vertical;min-height:58px;background:var(--md-bg);border:1px solid var(--md-border);border-radius:12px;padding:12px 14px;color:var(--md-text);font:15px/1.45 inherit;outline:none}
+#mdb .ia-box textarea:focus{border-color:var(--md-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--md-accent) 18%,transparent)}
+#mdb .ia-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:10px;flex-wrap:wrap}
+#mdb .ia-btns .btn{padding:9px 16px;border-radius:10px;font-weight:600}
+#mdb .ia-note{font-size:11.5px;color:var(--md-muted);margin-top:10px;line-height:1.5}
+#mdb .ia-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+#mdb .ia-chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--md-border);background:var(--md-panel);color:var(--md-text);font:600 13px/1 inherit;padding:10px 14px;border-radius:999px;cursor:pointer;transition:border-color .15s,transform .15s,background .15s}
+#mdb .ia-chip:hover{border-color:var(--md-accent);transform:translateY(-1px);background:var(--md-raised)}
+#mdb .ia-item{background:var(--md-panel);border:1px solid var(--md-border);border-radius:16px;padding:16px 18px;margin-bottom:12px;animation:iaIn .25s ease-out}
+@keyframes iaIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+#mdb .ia-q{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:700;color:var(--md-text);margin-bottom:12px}
+#mdb .ia-q i{margin-left:auto;font-style:normal;font-size:11px;font-weight:600;color:var(--md-muted);background:var(--md-raised);border:1px solid var(--md-border);padding:3px 9px;border-radius:999px}
+#mdb .ia-ans{font-size:13.5px;color:var(--md-text);line-height:1.55}
+#mdb .ia-p{margin:0 0 10px}
+#mdb .ia-p b{color:var(--md-text)}
+#mdb .ia-mut{color:var(--md-muted);font-size:12.5px}
+#mdb .ia-a{color:var(--md-text);text-decoration:none;font-weight:600}
+#mdb .ia-a:hover{color:var(--md-accent)}
+#mdb .ia-t{margin:4px 0 10px}
+#mdb .ia-tip{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;margin:0 0 8px;border:1px solid var(--md-border);border-left:3px solid var(--md-accent);background:color-mix(in srgb,var(--md-bg) 40%,transparent);font-size:13px}
+#mdb .ia-tip.good{border-left-color:var(--md-green)}
+#mdb .ia-tip.bad{border-left-color:var(--md-red)}
+#mdb .ia-tip.warn{border-left-color:var(--md-amber)}
+#mdb .ia-tip>span{line-height:1.4}
+#mdb .ia-more{margin-top:6px}
+#mdb .ia-raw{width:100%;min-height:140px;margin-top:6px;background:var(--md-bg);color:var(--md-muted);border:1px solid var(--md-border);border-radius:10px;padding:10px;font:11.5px/1.4 ui-monospace,monospace}
+#mdb .ia-cr{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin:6px 0 10px}
+#mdb .ia-ad{display:flex;gap:12px;padding:10px;border-radius:12px;border:1px solid var(--md-border);background:color-mix(in srgb,var(--md-bg) 40%,transparent);text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}
+#mdb .ia-ad:hover{border-color:var(--md-accent);transform:translateY(-1px)}
+#mdb .ia-th{position:relative;flex:0 0 76px;height:76px;border-radius:10px;overflow:hidden;background:var(--md-raised);display:flex;align-items:center;justify-content:center;font-size:24px}
+#mdb .ia-th img{width:100%;height:100%;object-fit:cover}
+#mdb .ia-th i{position:absolute;top:4px;left:4px;font-style:normal;font-size:11px;font-weight:800;background:var(--md-accent);color:var(--md-bg);border-radius:6px;padding:1px 6px}
+#mdb .ia-ai{min-width:0;display:flex;flex-direction:column;gap:2px}
+#mdb .ia-ai>b{font-size:13px;color:var(--md-text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mdb .ia-ai>span{font-size:11px;color:var(--md-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mdb .ia-m{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:5px}
+#mdb .ia-m em{font-style:normal;font-size:11px;color:var(--md-muted)}
+#mdb .ia-m em b{color:var(--md-text)}
+@media (max-width:520px){
+  #mdb .ia-chip{font-size:12.5px;padding:9px 12px}
+  #mdb .ia-btns .btn{flex:1;justify-content:center}
+}
 </style>
 <div id="mdb">
   <div id="alertBox" class="alert-box" style="display:none"></div>
   <div class="hdr">
-    <h1><span class="dot"></span>Meta Ads &mdash; Painel <span id="appVer" style="font-size:11px;color:var(--md-muted);font-weight:400;background:var(--md-raised);border:1px solid var(--md-border);border-radius:10px;padding:1px 8px;margin-left:4px" title="Versão do painel — se parecer desatualizado, dê Ctrl+Shift+R">v2026-11-10.3</span><span class="thm" id="thmSel" title="Tema do painel"><button type="button" data-thm="neon"><i style="background:#00e5ff;box-shadow:0 0 6px #00e5ff"></i>Neon</button><button type="button" data-thm="glass"><i style="background:linear-gradient(135deg,#7c8cff,#c58bff)"></i>Glass</button><button type="button" data-thm="holo"><i style="background:linear-gradient(135deg,#5b5bf7,#00c8ff,#ff5ec4)"></i>Holo</button></span></h1>
+    <h1><span class="dot"></span>Meta Ads &mdash; Painel <span id="appVer" style="font-size:11px;color:var(--md-muted);font-weight:400;background:var(--md-raised);border:1px solid var(--md-border);border-radius:10px;padding:1px 8px;margin-left:4px" title="Versão do painel — se parecer desatualizado, dê Ctrl+Shift+R">v2026-11-11.2</span><span class="thm" id="thmSel" title="Tema do painel"><button type="button" data-thm="neon"><i style="background:#00e5ff;box-shadow:0 0 6px #00e5ff"></i>Neon</button><button type="button" data-thm="glass"><i style="background:linear-gradient(135deg,#7c8cff,#c58bff)"></i>Glass</button><button type="button" data-thm="holo"><i style="background:linear-gradient(135deg,#5b5bf7,#00c8ff,#ff5ec4)"></i>Holo</button></span></h1>
     <div class="hdr-r">
       <div class="tabs">
         <button class="tab-btn on" data-tab="resumo">&#9889; Resumo</button>
+        <button class="tab-btn" data-tab="ia">&#129302; Pergunte</button>
         <button class="tab-btn" data-tab="contas">Contas</button>
         <button class="tab-btn" data-tab="cbo">&#128197; CBO Calculator</button>
         <button class="tab-btn" data-tab="abo">&#128202; ABO</button>
@@ -486,6 +537,7 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     </div>
   </div>
   <div class="tab-pane show" id="tab-resumo"><div id="rsRoot"></div></div>
+  <div class="tab-pane" id="tab-ia"><div id="iaRoot"></div></div>
   <div class="tab-pane" id="tab-contas">
     <div id="mainContent"><div class="ld"><span class="spin"></span>Iniciando...</div></div>
   </div>
@@ -5000,6 +5052,7 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
   }
   function rsRender() {
     var root = document.getElementById('rsRoot'); if (!root) return;
+    if (curTab === 'ia') setTimeout(iaRender, 0); /* aba Pergunte usa os mesmos dados */
     var per = RS.period, segs = [['today', 'Hoje'], ['yesterday', 'Ontem'], ['7d', '7 dias'], ['month', 'Mês']];
     var top = '<div class="rs-top"><div class="rs-title">Resumo<b>' + rsRanges(per).lbl + '</b></div><div class="rs-tools"><div class="rs-seg">' +
       segs.map(function(s){ return '<button type="button" data-rsp="' + s[0] + '"' + (s[0] === per ? ' class="on"' : '') + '>' + s[1] + '</button>'; }).join('') +
@@ -5091,7 +5144,9 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     ];
     var rates = [{ l: 'CTR', v: c.imp ? c.clk / c.imp : 0, pv: p.imp ? p.clk / p.imp : 0, dec: 2 }];
     if (hasIc) {
-      st.push({ l: 'Checkouts', ic: '&#128722;', v: c.ic, cost: c.ic ? c.spend / c.ic : 0, cl: 'custo/IC' });
+      var ckR = c.ic ? c.sales / c.ic : 0, ckP = p.ic ? p.sales / p.ic : 0;
+      st.push({ l: 'Checkouts', ic: '&#128722;', v: c.ic, cost: c.ic ? c.spend / c.ic : 0, cl: 'custo/IC',
+        xt: '<div class="rs-fx"><span>Conversão do checkout</span><b>' + (c.ic ? rsPct(ckR, 1) : '&mdash;') + '</b>' + (c.ic && ckP ? rsDelta(ckR, ckP, true) : '') + '<i>' + c.sales + ' venda' + (c.sales === 1 ? '' : 's') + ' de ' + c.ic + ' checkouts</i></div>' });
       rates.push({ l: 'clique &#8594; checkout', v: c.clk ? c.ic / c.clk : 0, pv: p.clk ? p.ic / p.clk : 0 });
       rates.push({ l: 'checkout &#8594; venda', v: c.ic ? c.sales / c.ic : 0, pv: p.ic ? p.sales / p.ic : 0 });
     } else {
@@ -5110,7 +5165,7 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
         '<div class="rs-cl"><span class="rs-ic">' + s.ic + '</span>' + s.l + '</div>' +
         '<div class="rs-fv">' + (s.v == null ? '<span class="rs-na">&mdash;</span>' : rsNum(s.v)) + '</div>' +
         '<div class="rs-fb"><i style="width:' + w + '%"></i></div>' +
-        '<div class="rs-fc">' + s.cl + ' <b>' + (s.cost && s.v != null ? rsMoney(s.cost) : '&mdash;') + '</b></div></div>';
+        '<div class="rs-fc">' + s.cl + ' <b>' + (s.cost && s.v != null ? rsMoney(s.cost) : '&mdash;') + '</b></div>' + (s.xt || '') + '</div>';
     });
     var overall = conv && c.clk ? '<span class="rs-sub">conversão geral <b>' + rsPct(c.sales / c.clk, 2) + '</b> dos cliques</span>' : '';
     return '<div class="rs-panel rs-fun-w"><div class="rs-ph"><div class="rs-pt">&#129514; Funil &middot; ' + rsRanges(RS.period).lbl + '</div>' + overall + '</div>' +
@@ -5251,6 +5306,262 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
   try { var _rg = localStorage.getItem('rs_grp'); if (_rg === 'acct' || _rg === 'offer') RS.grpBy = _rg; } catch(e) {}
   try { var _rp = localStorage.getItem('rs_period'); if (_rp && ['today', 'yesterday', '7d', 'month'].indexOf(_rp) >= 0) RS.period = _rp; } catch(e) {}
 
+  /* ===== ABA PERGUNTE — respostas prontas (calculadas no painel, custo zero) + "Perguntar ao Claude"
+     (copia a pergunta com os dados do periodo e abre o Claude do plano do usuario — sem API). Usa os dados do Resumo (RS). ===== */
+  var IA = { feed: [], ads: {}, busy: false };
+  var IA_QS = [
+    { id: 'vende', ic: '&#128722;', q: 'Qual campanha mais vende?' },
+    { id: 'criativos', ic: '&#127912;', q: 'Quais os melhores criativos?' },
+    { id: 'roas', ic: '&#128640;', q: 'Como melhorar o ROAS?' },
+    { id: 'perdendo', ic: '&#128184;', q: 'Onde estou perdendo dinheiro?' },
+    { id: 'ofertas', ic: '&#128230;', q: 'Quais ofertas dão mais lucro?' },
+    { id: 'comparar', ic: '&#128200;', q: 'Como está vs o período anterior?' },
+    { id: 'horarios', ic: '&#9200;', q: 'Quais os melhores horários?' }
+  ];
+  function iaMatch(t) {
+    t = (t || '').toLowerCase();
+    if (/criativ|an[uú]ncio|\bad\b|v[ií]deo|imagem/.test(t)) return 'criativos';
+    if (/roas|melhorar|otimiz|escal/.test(t)) return 'roas';
+    if (/perd|preju|queim|negativ/.test(t)) return 'perdendo';
+    if (/oferta|produto/.test(t)) return 'ofertas';
+    if (/hor[aá]rio|hora/.test(t)) return 'horarios';
+    if (/ontem|compar|anterior|semana passada|m[eê]s passado/.test(t)) return 'comparar';
+    if (/vend|campanha/.test(t)) return 'vende';
+    return '';
+  }
+  function iaTable(head, rows) {
+    return '<div class="rs-tw"><table class="rs-t ia-t"><thead><tr>' + head.map(function(h, i){ return '<th' + (i ? ' class="r"' : '') + '>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      rows.map(function(r){ return '<tr>' + r.map(function(c, i){ return '<td' + (i ? ' class="r"' : '') + '>' + c + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+  }
+  function iaCampLink(c) { return '<a class="ia-a" href="' + rsAdsLink(c) + '" target="_blank" rel="noopener">' + rsEsc(c.name) + '</a>'; }
+  function iaRoas(x) { return x.spend ? (x.rev / x.spend).toFixed(2).replace('.', ',') + 'x' : '&mdash;'; }
+  function iaTip(lv, t) { return '<div class="ia-tip ' + lv + '"><span>' + (lv === 'good' ? '&#9989;' : lv === 'bad' ? '&#128308;' : lv === 'warn' ? '&#128992;' : '&#128161;') + '</span><div>' + t + '</div></div>'; }
+
+  /* ── Respostas prontas ── */
+  function iaAnswer(id, m) {
+    var c = m.cur, p = m.prev, conv = c.hasConv, cfg = rsCfg(), lbl = m.r.lbl.toLowerCase();
+    var noConv = '<p class="ia-p">Sem fonte de vendas configurada: coloque o token do RedTrack em &#9881; Tokens para eu calcular vendas e lucro.</p>';
+    var act = c.camps.filter(function(x){ return x.spend > 0.009 || x.rev > 0; });
+    if (id === 'vende') {
+      if (!conv) return noConv;
+      var top = act.filter(function(x){ return x.sales > 0; }).sort(function(a, b){ return b.sales - a.sales || b.profit - a.profit; }).slice(0, 8);
+      if (!top.length) return '<p class="ia-p">Nenhuma campanha vendeu ' + lbl + ' ainda.</p>';
+      var f = top[0];
+      return '<p class="ia-p"><b>' + rsEsc(f.c.name) + '</b> é a que mais vende ' + lbl + ': <b>' + f.sales + ' venda' + (f.sales === 1 ? '' : 's') + '</b>, ' + rsMoney(f.rev, 0) + ' faturados e ' + rsMoney(f.profit, 0) + ' de lucro (ROAS ' + iaRoas(f) + ').</p>' +
+        iaTable(['Campanha', 'Vendas', 'Faturado', 'Lucro', 'ROAS', 'CPA'], top.map(function(x){ return [iaCampLink(x.c) + '<span class="rs-nc">' + rsEsc(x.c.acctName || '') + '</span>', x.sales, rsMoney(x.rev, 0), '<span class="' + (x.profit >= 0 ? 'pos' : 'neg') + '">' + rsMoney(x.profit, 0) + '</span>', iaRoas(x), rsMoney(x.spend / x.sales, 0)]; }));
+    }
+    if (id === 'perdendo') {
+      if (!conv) return noConv;
+      var neg = act.filter(function(x){ return x.profit < 0; }).sort(function(a, b){ return a.profit - b.profit; });
+      if (!neg.length) return iaTip('good', 'Nenhuma campanha no prejuízo ' + lbl + '. &#127881;');
+      var lost = neg.reduce(function(s, x){ return s + x.profit; }, 0), zero = neg.filter(function(x){ return !x.sales; });
+      return '<p class="ia-p"><b>' + neg.length + ' campanha' + (neg.length === 1 ? '' : 's') + '</b> no prejuízo ' + lbl + ', somando <b class="neg">' + rsMoney(lost, 0) + '</b>.' + (zero.length ? ' Dessas, <b>' + zero.length + '</b> gastaram sem vender nada (' + rsMoney(zero.reduce(function(s, x){ return s + x.spend; }, 0), 0) + ').' : '') + '</p>' +
+        iaTable(['Campanha', 'Gasto', 'Vendas', 'Lucro', 'CPA'], neg.slice(0, 10).map(function(x){ return [iaCampLink(x.c), rsMoney(x.spend, 0), x.sales, '<span class="neg">' + rsMoney(x.profit, 0) + '</span>', x.sales ? rsMoney(x.spend / x.sales, 0) : '&mdash;']; })) +
+        iaTip('info', 'Campanha sem venda acima de ' + rsMoney(cfg.alertSpend, 0) + ' ou com CPA acima do teto (' + rsMoney(cfg.cpa, 0) + ') são as primeiras candidatas a pausar ou reduzir.');
+    }
+    if (id === 'ofertas') {
+      if (!conv) return noConv;
+      var list = String(cfg.offers || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean), g = {};
+      act.forEach(function(x){ var k = rsOfferOf(x.c.name, list), o = g[k] || (g[k] = { k: k, spend: 0, rev: 0, sales: 0, n: 0 }); o.spend += x.spend; o.rev += x.rev; o.sales += x.sales; o.n++; });
+      var rows = Object.keys(g).map(function(k){ var o = g[k]; o.profit = o.rev - o.spend; return o; }).sort(function(a, b){ return b.profit - a.profit; });
+      if (!rows.length) return '<p class="ia-p">Sem gasto ' + lbl + '.</p>';
+      var b = rows[0], w = rows[rows.length - 1];
+      return '<p class="ia-p">A oferta mais lucrativa ' + lbl + ' é <b>' + rsEsc(b.k) + '</b> (' + rsMoney(b.profit, 0) + ', ROAS ' + iaRoas(b) + ').' + (rows.length > 1 && w.profit < 0 ? ' A pior é <b>' + rsEsc(w.k) + '</b>, com <span class="neg">' + rsMoney(w.profit, 0) + '</span>.' : '') + '</p>' +
+        iaTable(['Oferta', 'Camp.', 'Gasto', 'Faturado', 'Lucro', 'ROAS'], rows.map(function(o){ return ['<b>' + rsEsc(o.k) + '</b>', o.n, rsMoney(o.spend, 0), rsMoney(o.rev, 0), '<span class="' + (o.profit >= 0 ? 'pos' : 'neg') + '">' + rsMoney(o.profit, 0) + '</span>', iaRoas(o)]; }));
+    }
+    if (id === 'comparar') {
+      function line(nm, a, b, goodUp, money, fmt) {
+        return [nm, fmt(a), fmt(b), rsDelta(a, b, goodUp, money)];
+      }
+      var mf = function(v){ return rsMoney(v, 0); }, nf = function(v){ return String(Math.round(v)); }, rf = function(v){ return v ? v.toFixed(2).replace('.', ',') + 'x' : '&mdash;'; };
+      var rows2 = [line('Gasto', c.spend, p.spend, null, false, mf)];
+      if (conv) rows2.push(line('Faturado', c.rev, p.rev, true, false, mf), line('Lucro', c.profit, p.profit, true, true, mf), line('Vendas', c.sales, p.sales, true, false, nf), line('ROAS', c.roas, p.roas, true, false, rf), line('CPA', c.cpa, p.cpa, false, false, mf));
+      rows2.push(line('Cliques', c.clk, p.clk, true, false, nf), line('CTR', c.imp ? c.clk / c.imp * 100 : 0, p.imp ? p.clk / p.imp * 100 : 0, true, false, function(v){ return v.toFixed(2).replace('.', ',') + '%'; }));
+      var verdict = !conv ? '' : (c.profit >= p.profit ? iaTip('good', 'Lucro <b>melhor</b> que o período anterior (' + m.r.cmp + ').') : iaTip('bad', 'Lucro <b>pior</b> que o período anterior (' + m.r.cmp + '). Veja "Onde estou perdendo dinheiro?".'));
+      return verdict + iaTable(['Métrica', m.r.lbl, 'Anterior', 'Variação'], rows2);
+    }
+    if (id === 'horarios') {
+      if (!conv) return noConv;
+      var cd = rsChartData(m), tot = cd.a.reduce(function(s, v){ return s + v; }, 0);
+      if (!tot) return '<p class="ia-p">Nenhuma venda com horário registrada ' + lbl + '.</p>';
+      if (!cd.single) return '<p class="ia-p">' + rsBestHours(cd) + '</p><p class="ia-p ia-mut">Para horários, escolha Hoje ou Ontem no Resumo.</p>';
+      var blocks = [['Madrugada (0h–6h)', 0, 6], ['Manhã (6h–12h)', 6, 12], ['Tarde (12h–18h)', 12, 18], ['Noite (18h–24h)', 18, 24]].map(function(b){ var n = 0; for (var h = b[1]; h < b[2]; h++) n += cd.a[h]; return [b[0], n, rsPct(n / tot, 0)]; });
+      return '<p class="ia-p">' + rsBestHours(cd) + '</p>' + iaTable(['Faixa', 'Vendas', '% do dia'], blocks) +
+        iaTip('info', 'Se a madrugada vende pouco e gasta muito, vale limitar o gasto à noite. Se a noite concentra as vendas, garanta orçamento sobrando para ela.');
+    }
+    if (id === 'roas') return iaRoasPlan(m);
+    return '';
+  }
+  /* Diagnostico por regras: o que fazer para melhorar o ROAS, do mais urgente ao menos. */
+  function iaRoasPlan(m) {
+    var c = m.cur, conv = c.hasConv, cfg = rsCfg(), tips = [], act = c.camps.filter(function(x){ return x.spend > 0.009; });
+    if (!conv) return '<p class="ia-p">Sem fonte de vendas configurada: coloque o token do RedTrack em &#9881; Tokens.</p>';
+    var meta = +cfg.roas || 0;
+    tips.push(iaTip(c.roas >= meta ? 'good' : 'warn', 'ROAS ' + m.r.lbl.toLowerCase() + ': <b>' + (c.spend ? c.roas.toFixed(2).replace('.', ',') + 'x' : '&mdash;') + '</b> (meta ' + meta.toFixed(2).replace('.', ',') + 'x).'));
+    var zero = act.filter(function(x){ return !x.sales && x.spend >= cfg.alertSpend; }).sort(function(a, b){ return b.spend - a.spend; });
+    if (zero.length) tips.push(iaTip('bad', '<b>Pausar ou revisar</b> ' + zero.length + ' campanha(s) gastando sem venda: ' + zero.slice(0, 4).map(function(x){ return iaCampLink(x.c) + ' (' + rsMoney(x.spend, 0) + ')'; }).join(', ') + '. Isso sozinho tira ' + rsMoney(zero.reduce(function(s, x){ return s + x.spend; }, 0), 0) + ' do custo.'));
+    var hiCpa = act.filter(function(x){ return x.sales > 0 && x.spend / x.sales > cfg.cpa; }).sort(function(a, b){ return b.spend / b.sales - a.spend / a.sales; });
+    if (hiCpa.length) tips.push(iaTip('warn', '<b>Reduzir orçamento</b> onde o CPA passou do teto (' + rsMoney(cfg.cpa, 0) + '): ' + hiCpa.slice(0, 4).map(function(x){ return iaCampLink(x.c) + ' (CPA ' + rsMoney(x.spend / x.sales, 0) + ')'; }).join(', ') + '.'));
+    var win = act.filter(function(x){ return x.sales >= 2 && x.spend && x.rev / x.spend >= meta * 1.3; }).sort(function(a, b){ return b.rev / b.spend - a.rev / a.spend; });
+    if (win.length) tips.push(iaTip('good', '<b>Escalar</b> (+20% de orçamento) as que estão bem acima da meta: ' + win.slice(0, 4).map(function(x){ return iaCampLink(x.c) + ' (ROAS ' + iaRoas(x) + ')'; }).join(', ') + '.'));
+    var p = m.prev, rates = [['CTR', c.imp ? c.clk / c.imp : 0, p.imp ? p.clk / p.imp : 0, 'os criativos estão chamando menos atenção: teste ganchos e criativos novos'],
+      ['clique &#8594; checkout', c.clk ? c.ic / c.clk : 0, p.clk ? p.ic / p.clk : 0, 'confira a página: velocidade, VSL e promessa alinhada com o anúncio'],
+      ['checkout &#8594; venda', c.ic ? c.sales / c.ic : 0, p.ic ? p.sales / p.ic : 0, 'mais desistência no checkout: confira pagamento e oferta']];
+    rates.forEach(function(r){ if (r[2] > 0 && (r[1] - r[2]) / r[2] <= -0.1) tips.push(iaTip('warn', '<b>' + r[0] + '</b> caiu ' + rsPct((r[2] - r[1]) / r[2], 0) + ' vs o período anterior: ' + r[3] + '.')); });
+    var cpm = c.imp ? c.spend / c.imp * 1000 : 0, cpmP = p.imp ? p.spend / p.imp * 1000 : 0;
+    if (cpmP && cpm > cpmP * 1.2) tips.push(iaTip('info', 'O <b>CPM subiu</b> ' + rsPct(cpm / cpmP - 1, 0) + ' (' + rsMoney(cpm) + '). Leilão mais caro: públicos mais abertos e criativos novos ajudam.'));
+    if (tips.length === 1) tips.push(iaTip('good', 'Nenhum ponto crítico encontrado. Siga escalando o que está acima da meta com calma (+20% por vez).'));
+    return tips.join('');
+  }
+
+  /* ── Melhores criativos: metricas por ANUNCIO no Meta + miniatura ── */
+  function iaAdAct(arr, kind) {
+    var v = 0;
+    (arr || []).forEach(function(a){ var t = a.action_type || ''; if (kind === 'p' ? /(^|\.)(purchase|fb_pixel_purchase)$/.test(t) : /(^|\.)(initiate_checkout|fb_pixel_initiate_checkout)$/.test(t)) v = Math.max(v, parseFloat(a.value) || 0); });
+    return v;
+  }
+  function iaLoadAds(rg) {
+    var key = rg.since + rg.until;
+    if (IA.ads[key]) return Promise.resolve(IA.ads[key]);
+    var accts = RS.base.accts, out = [], tr = encodeURIComponent(JSON.stringify(rg)), i = 0;
+    function one(a) {
+      return fjPaged(API + '/' + a.id + '/insights?level=ad&fields=ad_id,ad_name,campaign_id,campaign_name,spend,impressions,inline_link_clicks,actions&time_range=' + tr + '&limit=500&access_token=' + a._tk).then(function(rows) {
+        rows.forEach(function(r){ var sp = (parseFloat(r.spend) || 0) * (a._rate || 1); if (sp <= 0) return;
+          out.push({ id: r.ad_id, name: r.ad_name, cid: r.campaign_id, cname: r.campaign_name, acctId: a.id, tk: a._tk, spend: sp, imp: parseInt(r.impressions) || 0, clk: parseInt(r.inline_link_clicks) || 0, ic: iaAdAct(r.actions, 'i'), buy: iaAdAct(r.actions, 'p') }); });
+      });
+    }
+    function next() {
+      if (i >= accts.length) return Promise.resolve();
+      var b = accts.slice(i, i + 5); i += 5;
+      return Promise.all(b.map(function(a){ return one(a).catch(function(){}); })).then(next);
+    }
+    return next().then(function() {
+      var hasBuy = out.some(function(x){ return x.buy > 0; }), minSp = Math.max(5, rsCfg().alertSpend * 0.25);
+      out.forEach(function(x){ x.ctr = x.imp ? x.clk / x.imp : 0; x.cpc = x.clk ? x.spend / x.clk : 0; });
+      var pool = out.filter(function(x){ return x.spend >= minSp; }); if (pool.length < 3) pool = out.slice();
+      pool.sort(hasBuy ? function(a, b){ return (b.buy - a.buy) || (a.spend / (a.buy || 1e-9) - b.spend / (b.buy || 1e-9)); }
+                       : function(a, b){ return (b.ic - a.ic) || (b.ctr - a.ctr); });
+      var top = pool.slice(0, 8);
+      /* miniaturas: 1 chamada por token (?ids=) */
+      var byTk = {}; top.forEach(function(x){ (byTk[x.tk] = byTk[x.tk] || []).push(x.id); });
+      return Promise.all(Object.keys(byTk).map(function(tk) {
+        return fj(API + '/?ids=' + byTk[tk].join(',') + '&fields=creative{thumbnail_url,image_url}&access_token=' + tk).then(function(d) {
+          top.forEach(function(x){ var o = d && d[x.id]; if (o && o.creative) x.thumb = o.creative.thumbnail_url || o.creative.image_url || ''; });
+        }).catch(function(){});
+      })).then(function(){ var res = { top: top, hasBuy: hasBuy, total: out.length, minSp: minSp }; IA.ads[key] = res; return res; });
+    });
+  }
+  function iaCreativesHtml(res, m) {
+    if (!res.top.length) return '<p class="ia-p">Nenhum anúncio com gasto ' + m.r.lbl.toLowerCase() + '.</p>';
+    var crit = res.hasBuy ? 'compras registradas pelo pixel do Meta' : 'checkouts (pixel) e CTR';
+    return '<p class="ia-p">Os melhores de <b>' + res.total + ' anúncios</b> com gasto, ordenados por ' + crit + '.</p><div class="ia-cr">' +
+      res.top.map(function(x, i) {
+        var link = 'https://adsmanager.facebook.com/adsmanager/manage/ads?act=' + String(x.acctId).replace('act_', '') + '&selected_ad_ids=' + x.id;
+        return '<a class="ia-ad" href="' + link + '" target="_blank" rel="noopener"><div class="ia-th">' + (x.thumb ? '<img src="' + rsEsc(x.thumb) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' : '<span>&#127912;</span>') + '<i>' + (i + 1) + '</i></div>' +
+          '<div class="ia-ai"><b>' + rsEsc(x.name) + '</b><span>' + rsEsc(x.cname || '') + '</span><div class="ia-m">' +
+          '<em>Gasto <b>' + rsMoney(x.spend, 0) + '</b></em><em>CTR <b>' + rsPct(x.ctr, 2) + '</b></em><em>CPC <b>' + rsMoney(x.cpc) + '</b></em>' +
+          (x.ic ? '<em>Checkouts <b>' + x.ic + '</b></em>' : '') + (x.buy ? '<em>Compras <b>' + x.buy + '</b></em><em>CPA <b>' + rsMoney(x.spend / x.buy, 0) + '</b></em>' : '') +
+          '</div></div></a>';
+      }).join('') + '</div>' +
+      iaTip('info', 'Vendas e lucro reais por anúncio aparecem quando o RedTrack recebe o ID do anúncio num sub. Aqui o ranking usa os dados do pixel do Meta.');
+  }
+
+  /* ── "Perguntar ao Claude": monta a pergunta + dados do periodo e copia ── */
+  function iaContext(m, q) {
+    var c = m.cur, p = m.prev, cfg = rsCfg(), L = [];
+    var f2 = function(v){ return (Math.round(v * 100) / 100).toFixed(2); };
+    L.push('Sou gestor de tráfego (Meta Ads, afiliado de produtos, vendas rastreadas pelo RedTrack, comissão varia por venda). Analise os dados do meu painel e responda em português, direto ao ponto, com ações práticas priorizadas.');
+    L.push('', 'PERGUNTA: ' + q, '', '=== DADOS (' + m.r.lbl + ': ' + m.r.cur.since + (m.r.cur.until !== m.r.cur.since ? ' a ' + m.r.cur.until : '') + '; comparação ' + m.r.cmp + '; valores em US$) ===');
+    L.push('Totais: gasto ' + f2(c.spend) + ' | faturado ' + f2(c.rev) + ' | lucro ' + f2(c.profit) + ' | vendas ' + c.sales + ' | ROAS ' + f2(c.roas) + ' | CPA ' + f2(c.cpa));
+    L.push('Período anterior: gasto ' + f2(p.spend) + ' | faturado ' + f2(p.rev) + ' | lucro ' + f2(p.profit) + ' | vendas ' + p.sales + ' | ROAS ' + f2(p.roas) + ' | CPA ' + f2(p.cpa));
+    L.push('Funil: impressões ' + Math.round(c.imp) + ' | cliques no link ' + Math.round(c.clk) + ' | checkouts (IC) ' + c.ic + ' | vendas ' + c.sales + ' | CTR ' + (c.imp ? f2(c.clk / c.imp * 100) : 0) + '% | CPM ' + (c.imp ? f2(c.spend / c.imp * 1000) : 0) + ' | CPC ' + (c.clk ? f2(c.spend / c.clk) : 0));
+    L.push('Funil anterior: impressões ' + Math.round(p.imp) + ' | cliques ' + Math.round(p.clk) + ' | checkouts ' + p.ic + ' | vendas ' + p.sales);
+    L.push('Minhas metas: teto de CPA ' + cfg.cpa + ' | meta de ROAS ' + cfg.roas + (cfg.goal ? ' | meta diária de ' + cfg.goalType + ' ' + cfg.goal : ''));
+    if (m.proj) L.push('Projeção de fechamento (' + m.projNote + '): gasto ' + f2(m.proj.spend) + ' | faturado ' + f2(m.proj.rev) + ' | lucro ' + f2(m.proj.profit));
+    L.push('', 'Campanhas com gasto (nome | conta | status | gasto | faturado | lucro | vendas | cliques | checkouts):');
+    c.camps.filter(function(x){ return x.spend > 0.009 || x.rev > 0; }).sort(function(a, b){ return b.spend - a.spend; }).slice(0, 60).forEach(function(x) {
+      L.push('- ' + x.c.name + ' | ' + (x.c.acctName || '') + ' | ' + (x.c.status || '-') + ' | ' + f2(x.spend) + ' | ' + f2(x.rev) + ' | ' + f2(x.profit) + ' | ' + x.sales + ' | ' + x.clk + ' | ' + (x.ic || 0));
+    });
+    var cd = rsChartData(m);
+    if (c.hasConv) L.push('', 'Vendas por ' + (cd.single ? 'hora' : 'dia') + ' (' + m.r.lbl + '): ' + cd.a.map(function(v, i){ return cd.lab(i) + '=' + v; }).filter(function(s){ return !/=0$/.test(s); }).join(', '));
+    var al = rsAlerts(m);
+    if (al.length) { L.push('', 'Alertas do painel:'); al.slice(0, 20).forEach(function(a){ L.push('- ' + a.t.replace(/<[^>]+>/g, '') + ': ' + String(a.d).replace(/<[^>]+>/g, '').replace(/&[a-z#0-9]+;/g, ' ')); }); }
+    if (IA.lastAds) { L.push('', 'Melhores anúncios (Meta, por pixel): '); IA.lastAds.top.forEach(function(x){ L.push('- ' + x.name + ' (' + (x.cname || '') + '): gasto ' + f2(x.spend) + ', CTR ' + f2(x.ctr * 100) + '%, CPC ' + f2(x.cpc) + ', checkouts ' + x.ic + ', compras ' + x.buy); }); }
+    return L.join('\n');
+  }
+  /* Copia SINCRONO primeiro (execCommand, vale no clique), senao tenta a Clipboard API. */
+  function iaCopySync(text) {
+    var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;font-size:16px';
+    document.body.appendChild(ta); ta.focus(); ta.select(); try { ta.setSelectionRange(0, text.length); } catch(e) {}
+    var ok = false; try { ok = document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(ta); return ok;
+  }
+  function iaCopy(text) {
+    if (iaCopySync(text)) return Promise.resolve(true);
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text).then(function(){ return true; }, function(){ return false; });
+    return Promise.resolve(false);
+  }
+  function iaAskClaude(q) {
+    if (!RS.base) return;
+    var text = iaContext(rsCompute(), q || 'Faça um diagnóstico geral do período e diga o que eu devo fazer agora.');
+    var ok = iaCopySync(text);
+    var w = window.open('https://claude.ai/new', '_blank');
+    try { if (w) w.opener = null; } catch(e) {}
+    var item = { q: q || 'Diagnóstico geral', claude: true, ok: ok, text: text };
+    IA.feed.unshift(item);
+    if (ok) { iaRender(); if (!w) notifyOk('Pergunta copiada', 'Abra o Claude e cole (Cmd+V).'); return; }
+    iaCopy(text).then(function(ok2){ item.ok = ok2; iaRender(); });
+  }
+
+  /* ── Render ── */
+  function iaRender() {
+    var root = document.getElementById('iaRoot'); if (!root) return;
+    var head = '<div class="rs-top"><div class="rs-title">Pergunte<b>&#129302; Pergunte ao painel</b></div><div class="ia-per">Dados de: <b>' + rsRanges(RS.period).lbl + '</b> <span class="rs-sub">(muda no Resumo)</span></div></div>';
+    if (!getTks().length) { root.innerHTML = head + '<div class="rs-empty">Coloque seu token do Meta em <b>&#9881; Tokens</b> primeiro.</div>'; return; }
+    if (!RS.base || RS.loading) { root.innerHTML = head + '<div class="rs-loadmsg"><span class="spin"></span>Carregando os dados do Resumo...</div>'; return; }
+    var chips = '<div class="ia-chips">' + IA_QS.map(function(x){ return '<button type="button" class="ia-chip" data-iaq="' + x.id + '"><span>' + x.ic + '</span>' + x.q + '</button>'; }).join('') + '</div>';
+    var box = '<div class="ia-box"><textarea id="iaIn" rows="2" placeholder="Pergunte qualquer coisa sobre suas campanhas... (Enter responde aqui, se der; o botão manda para o Claude com todos os dados)"></textarea>' +
+      '<div class="ia-btns"><button type="button" class="btn" id="iaLocal">Responder aqui</button><button type="button" class="btn btn-blue" id="iaClaude">&#10024; Perguntar ao Claude</button></div>' +
+      '<div class="ia-note">"Perguntar ao Claude" copia sua pergunta com os dados do período e abre o Claude. É só colar (Cmd+V ou segurar e Colar) e enviar. Usa o seu plano, sem custo extra.</div></div>';
+    var feed = IA.feed.map(function(it, i) {
+      var body;
+      if (it.claude) body = it.ok ? iaTip('good', 'Copiei a pergunta com os dados (' + Math.round(it.text.length / 1000) + ' mil caracteres) e abri o Claude numa nova aba. <b>Cole e envie.</b> <button type="button" class="rs-link sm" data-iacp="' + i + '">copiar de novo</button>')
+        : iaTip('warn', 'Não consegui copiar sozinho. Selecione o texto abaixo, copie e cole no Claude.') + '<textarea class="ia-raw" readonly>' + rsEsc(it.text) + '</textarea>';
+      else body = it.html;
+      return '<div class="ia-item"><div class="ia-q"><span>' + (it.claude ? '&#10024;' : '&#128172;') + '</span>' + rsEsc(it.q) + '<i>' + (it.claude ? 'Claude' : rsRanges(it.per || RS.period).lbl) + '</i></div><div class="ia-ans">' + body + '</div></div>';
+    }).join('');
+    root.innerHTML = head + box + chips + (feed || '<div class="rs-empty sm">Escolha uma pergunta acima ou escreva a sua.</div>');
+    iaBind();
+  }
+  function iaRun(id, q) {
+    var m = rsCompute(), item = { q: q, per: RS.period, html: '' };
+    if (id === 'criativos') {
+      item.html = '<div class="rs-loadmsg"><span class="spin"></span>Buscando anúncios e criativos...</div>';
+      IA.feed.unshift(item); iaRender();
+      iaLoadAds(m.r.cur).then(function(res){ IA.lastAds = res; item.html = iaCreativesHtml(res, m); iaRender(); }, function(){ item.html = iaTip('bad', 'Não consegui buscar os anúncios agora. Tente de novo.'); iaRender(); });
+      return;
+    }
+    item.html = iaAnswer(id, m);
+    item.html += '<div class="ia-more"><button type="button" class="rs-link sm" data-iamore="' + rsEsc(q) + '">&#10024; Aprofundar com o Claude</button></div>';
+    IA.feed.unshift(item); iaRender();
+  }
+  function iaBind() {
+    var root = document.getElementById('iaRoot');
+    root.querySelectorAll('[data-iaq]').forEach(function(b){ b.onclick = function(){ var id = this.getAttribute('data-iaq'); iaRun(id, IA_QS.filter(function(x){ return x.id === id; })[0].q); }; });
+    root.querySelectorAll('[data-iamore]').forEach(function(b){ b.onclick = function(){ iaAskClaude(this.getAttribute('data-iamore')); }; });
+    root.querySelectorAll('[data-iacp]').forEach(function(b){ b.onclick = function(){ var it = IA.feed[+this.getAttribute('data-iacp')]; iaCopy(it.text).then(function(ok){ if (ok) notifyOk('Copiado de novo', 'Cole no Claude.'); }); }; });
+    var inp = document.getElementById('iaIn');
+    function local() {
+      var q = inp.value.trim(); if (!q) return;
+      var id = iaMatch(q);
+      if (!id) { IA.feed.unshift({ q: q, per: RS.period, html: '<p class="ia-p">Essa eu não sei responder sozinho aqui no painel.</p><div class="ia-more"><button type="button" class="btn btn-blue" data-iamore="' + rsEsc(q) + '">&#10024; Perguntar ao Claude com os dados</button></div>' }); iaRender(); return; }
+      iaRun(id, q);
+    }
+    document.getElementById('iaLocal').onclick = local;
+    document.getElementById('iaClaude').onclick = function(){ iaAskClaude(inp.value.trim()); };
+    inp.onkeydown = function(e){ if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); local(); } };
+  }
+
   document.querySelectorAll('#mdb .tab-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('#mdb .tab-btn').forEach(function(b) { b.classList.remove('on'); });
@@ -5262,6 +5573,7 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
       else if (curTab === 'orc') { renderOrc(); fetchRoboHist(); }
       else if (curTab === 'abo') { if (!aboData.length && !aboLoading) loadABO(); }
       else if (curTab === 'resumo') { if (!RS.base && !RS.loading) rsLoad(); else rsRender(); }
+      else if (curTab === 'ia') { if (!RS.base && !RS.loading) rsLoad(); iaRender(); }
     });
   });
   /* Controles do painel de Historico */
@@ -5320,7 +5632,7 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
       renderOrc();
     });
   });
-  document.getElementById('btnRefresh').addEventListener('click', function() { if (curTab === 'cbo') loadCBO(); else if (curTab === 'abo') loadABO(); else if (curTab === 'resumo') rsLoad(true); else load(); });
+  document.getElementById('btnRefresh').addEventListener('click', function() { if (curTab === 'cbo') loadCBO(); else if (curTab === 'abo') loadABO(); else if (curTab === 'resumo' || curTab === 'ia') rsLoad(true); else load(); });
   document.getElementById('btnTokens').addEventListener('click', openModal);
   document.getElementById('btnLoadCBO').addEventListener('click', loadCBO);
   /* PAUSAR/ATIVAR TUDO (so campanhas com CBO no nome). Age nas campanhas JA carregadas (cboData). */
