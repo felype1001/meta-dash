@@ -515,11 +515,21 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
   #mdb .ia-chip{font-size:12.5px;padding:9px 12px}
   #mdb .ia-btns .btn{flex:1;justify-content:center}
 }
+#mdb .ia-head{font-size:15px;line-height:1.5}
+#mdb .ia-win{display:inline-block;font-size:12px;font-weight:600;color:var(--md-accent);background:color-mix(in srgb,var(--md-accent) 12%,transparent);border-radius:999px;padding:1px 9px;margin-left:2px}
+#mdb .ia-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin:10px 0 14px}
+#mdb .ia-kpis div{background:color-mix(in srgb,var(--md-bg) 45%,transparent);border:1px solid var(--md-border);border-radius:10px;padding:9px 11px;display:flex;flex-direction:column;gap:3px}
+#mdb .ia-kpis span{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--md-muted);font-weight:600}
+#mdb .ia-kpis b{font-size:17px;color:var(--md-text)}
+#mdb .ia-st{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--md-muted);margin:6px 0 4px}
+#mdb #iaRoot .pos{color:var(--md-green);font-size:inherit;font-weight:inherit}
+#mdb #iaRoot .neg{color:var(--md-red);font-size:inherit;font-weight:inherit}
+#mdb .ia-t td,#mdb .ia-t th{font-family:inherit}
 </style>
 <div id="mdb">
   <div id="alertBox" class="alert-box" style="display:none"></div>
   <div class="hdr">
-    <h1><span class="dot"></span>Meta Ads &mdash; Painel <span id="appVer" style="font-size:11px;color:var(--md-muted);font-weight:400;background:var(--md-raised);border:1px solid var(--md-border);border-radius:10px;padding:1px 8px;margin-left:4px" title="Versão do painel — se parecer desatualizado, dê Ctrl+Shift+R">v2026-11-11.2</span><span class="thm" id="thmSel" title="Tema do painel"><button type="button" data-thm="neon"><i style="background:#00e5ff;box-shadow:0 0 6px #00e5ff"></i>Neon</button><button type="button" data-thm="glass"><i style="background:linear-gradient(135deg,#7c8cff,#c58bff)"></i>Glass</button><button type="button" data-thm="holo"><i style="background:linear-gradient(135deg,#5b5bf7,#00c8ff,#ff5ec4)"></i>Holo</button></span></h1>
+    <h1><span class="dot"></span>Meta Ads &mdash; Painel <span id="appVer" style="font-size:11px;color:var(--md-muted);font-weight:400;background:var(--md-raised);border:1px solid var(--md-border);border-radius:10px;padding:1px 8px;margin-left:4px" title="Versão do painel — se parecer desatualizado, dê Ctrl+Shift+R">v2026-11-12.2</span><span class="thm" id="thmSel" title="Tema do painel"><button type="button" data-thm="neon"><i style="background:#00e5ff;box-shadow:0 0 6px #00e5ff"></i>Neon</button><button type="button" data-thm="glass"><i style="background:linear-gradient(135deg,#7c8cff,#c58bff)"></i>Glass</button><button type="button" data-thm="holo"><i style="background:linear-gradient(135deg,#5b5bf7,#00c8ff,#ff5ec4)"></i>Holo</button></span></h1>
     <div class="hdr-r">
       <div class="tabs">
         <button class="tab-btn on" data-tab="resumo">&#9889; Resumo</button>
@@ -4858,11 +4868,15 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
         .then(function(d) {
           var rows = (d && (d.items || d.data)) || (Array.isArray(d) ? d : []); if (!Array.isArray(rows)) rows = [];
           rows.forEach(function(row) {
-            if (String(row.type).toLowerCase() !== 'purchase') return;
+            var ty = String(row.type).toLowerCase(), t = ty === 'purchase' ? 'p' : (/initiate|checkout/.test(ty) ? 'i' : '');
+            if (!t) return;
             var ms = Date.parse(row.conv_time || row.created_at || row.track_time || ''); if (isNaN(ms)) return;
-            out.push({ ms: ms, rev: parseFloat(row.revenue || row.payout || row.pub_revenue) || 0, id: row.sub3 != null ? String(row.sub3) : '' });
+            /* guarda os subs e os campos rt_* do RedTrack (rt_ad = nome do anuncio, rt_ad_id, rt_campaign...) — usados pela aba Pergunte */
+            var subs = {}; Object.keys(row).forEach(function(k){ if ((/^sub\d+$/.test(k) || /^rt_/.test(k)) && row[k] != null && row[k] !== '' && typeof row[k] !== 'object') subs[k] = String(row[k]); });
+            var cid = (row.sub3 != null && row.sub3 !== '') ? String(row.sub3) : (row.rt_campaign_id ? String(row.rt_campaign_id) : '');
+            out.push({ ms: ms, t: t, rev: t === 'p' ? (parseFloat(row.revenue || row.payout || row.pub_revenue) || 0) : 0, id: cid, subs: subs });
           });
-          if (rows.length >= 1000 && p < 8) return page(p + 1);
+          if (rows.length >= 1000 && p < 20) return page(p + 1);
         });
     }
     return page(1).then(function(){ RS.ev[key] = out; }).catch(function(){ RS.ev[key] = out; });
@@ -4874,7 +4888,9 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     return Promise.resolve();
   }
   function rsRep(rg) { var s = rsSrc(); return s ? RS.rep[(s === 'rt' ? 'r' : 'u') + rg.since + rg.until] : null; }
-  function rsEv(rg) { var s = rsSrc(); return s ? (RS.ev[(s === 'rt' ? 'r' : 'u') + rg.since + rg.until] || []) : []; }
+  /* rsEv = so VENDAS (com horario); rsEvAll = vendas + checkouts (t:'i'), com os subs */
+  function rsEvAll(rg) { var s = rsSrc(); return s ? (RS.ev[(s === 'rt' ? 'r' : 'u') + rg.since + rg.until] || []) : []; }
+  function rsEv(rg) { return rsEvAll(rg).filter(function(e){ return e.t !== 'i'; }); }
 
   /* ── Calculos ── */
   function rsSumHours(arr, cut) {
@@ -5329,9 +5345,12 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     if (/vend|campanha/.test(t)) return 'vende';
     return '';
   }
-  function iaTable(head, rows) {
-    return '<div class="rs-tw"><table class="rs-t ia-t"><thead><tr>' + head.map(function(h, i){ return '<th' + (i ? ' class="r"' : '') + '>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' +
-      rows.map(function(r){ return '<tr>' + r.map(function(c, i){ return '<td' + (i ? ' class="r"' : '') + '>' + c + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+  /* left = indices das colunas de TEXTO (alinhadas a esquerda); o resto e numero (direita) */
+  function iaTable(head, rows, left) {
+    left = left || [0];
+    var al = function(i){ return left.indexOf(i) >= 0 ? '' : ' class="r"'; };
+    return '<div class="rs-tw"><table class="rs-t ia-t"><thead><tr>' + head.map(function(h, i){ return '<th' + al(i) + '>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      rows.map(function(r){ return '<tr>' + r.map(function(c, i){ return '<td' + al(i) + '>' + c + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
   }
   function iaCampLink(c) { return '<a class="ia-a" href="' + rsAdsLink(c) + '" target="_blank" rel="noopener">' + rsEsc(c.name) + '</a>'; }
   function iaRoas(x) { return x.spend ? (x.rev / x.spend).toFixed(2).replace('.', ',') + 'x' : '&mdash;'; }
@@ -5520,7 +5539,7 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     if (!getTks().length) { root.innerHTML = head + '<div class="rs-empty">Coloque seu token do Meta em <b>&#9881; Tokens</b> primeiro.</div>'; return; }
     if (!RS.base || RS.loading) { root.innerHTML = head + '<div class="rs-loadmsg"><span class="spin"></span>Carregando os dados do Resumo...</div>'; return; }
     var chips = '<div class="ia-chips">' + IA_QS.map(function(x){ return '<button type="button" class="ia-chip" data-iaq="' + x.id + '"><span>' + x.ic + '</span>' + x.q + '</button>'; }).join('') + '</div>';
-    var box = '<div class="ia-box"><textarea id="iaIn" rows="2" placeholder="Pergunte qualquer coisa sobre suas campanhas... (Enter responde aqui, se der; o botão manda para o Claude com todos os dados)"></textarea>' +
+    var box = '<div class="ia-box"><textarea id="iaIn" rows="2" placeholder="Ex.: de 08:41 até agora o ad 11H4 fez quantas vendas? · quanto gastei ontem? · qual anúncio mais vendeu hoje? · lucro da campanha Memory das 10h às 14h"></textarea>' +
       '<div class="ia-btns"><button type="button" class="btn" id="iaLocal">Responder aqui</button><button type="button" class="btn btn-blue" id="iaClaude">&#10024; Perguntar ao Claude</button></div>' +
       '<div class="ia-note">"Perguntar ao Claude" copia sua pergunta com os dados do período e abre o Claude. É só colar (Cmd+V ou segurar e Colar) e enviar. Usa o seu plano, sem custo extra.</div></div>';
     var feed = IA.feed.map(function(it, i) {
@@ -5553,6 +5572,10 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     var inp = document.getElementById('iaIn');
     function local() {
       var q = inp.value.trim(); if (!q) return;
+      var t = iaNorm(q);
+      /* conselho ("como melhorar", "onde perco") -> respostas prontas; o resto -> motor com os dados */
+      if (/melhorar|otimiz|escalar|dica|o que (eu )?(faco|fazer|devo)|perdendo|prejuizo|queimando/.test(t) && !/\b(de|das|desde) \d/.test(t)) { var id0 = iaMatch(q); if (id0) { iaRun(id0, q); inp.value = ''; return; } }
+      if (iaSmart(q)) { inp.value = ''; return; }
       var id = iaMatch(q);
       if (!id) { IA.feed.unshift({ q: q, per: RS.period, html: '<p class="ia-p">Essa eu não sei responder sozinho aqui no painel.</p><div class="ia-more"><button type="button" class="btn btn-blue" data-iamore="' + rsEsc(q) + '">&#10024; Perguntar ao Claude com os dados</button></div>' }); iaRender(); return; }
       iaRun(id, q);
@@ -5560,6 +5583,220 @@ if(['neon','glass','holo'].indexOf(t)<0)t='neon';document.documentElement.setAtt
     document.getElementById('iaLocal').onclick = local;
     document.getElementById('iaClaude').onclick = function(){ iaAskClaude(inp.value.trim()); };
     inp.onkeydown = function(e){ if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); local(); } };
+  }
+
+  /* ===== PERGUNTA LIVRE: interpreta a pergunta (o quê / qual número / quando) e responde com os DADOS do painel
+     (vendas uma a uma do RedTrack com horario + gasto/cliques do Meta). Sem IA paga. ===== */
+  function iaNorm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function iaKey(s) { return iaNorm(s).replace(/[^a-z0-9]/g, ''); }
+  var IA_STOP = ('o a os as um uma de da do das dos e em no na nos nas por para pra pro com sem que qual quais quanto quantos quantas ' +
+    'foi fez fizeram teve tem tive tivemos esta estao esse essa este esta isso hoje ontem anteontem agora ate desde partir ' +
+    'horas hora h min minutos venda vendas vendeu vendi vender gasto gastou gastei lucro lucrou faturou faturamento faturado receita roas cpa ' +
+    'checkout checkouts ic clique cliques ctr cpc impressoes ad ads anuncio anuncios criativo criativos campanha campanhas conta contas oferta ofertas produto ' +
+    'mais menos melhor melhores pior piores top ranking me mostra mostrar diga quero saber como ta tá meu minha meus minhas dia dias semana mes ultima ultimas ultimo ultimos periodo ' +
+    'as às numero total geral tudo todos todas cada qualquer coisa ai sobre entre dele dela nele nela ja so').split(' ');
+  var IA_MET = [['vendas', /vend|compra|convers/], ['faturado', /fatur|receita|revenue|ganhei/], ['lucro', /lucr/], ['gasto', /gast|invest|spend/],
+    ['roas', /roas|retorno/], ['cpa', /\bcpa\b|custo por venda/], ['checkouts', /checkout|\bics?\b/], ['cliques', /clique|click/], ['ctr', /\bctr\b/], ['cpc', /\bcpc\b/]];
+  function iaHM(h, m) { return h + (m ? m / 60 : 0); }
+  function iaFmtH(h) { var hh = Math.floor(h), mm = Math.round((h - hh) * 60); if (mm === 60) { hh++; mm = 0; } return ('0' + hh).slice(-2) + ':' + ('0' + mm).slice(-2); }
+  function iaParse(q) {
+    var t = iaNorm(q), today = rsToday(), w = { since: today, until: today, lbl: 'hoje' }, any = false;
+    if (/anteontem/.test(t)) { var a2 = shiftDay(today, -2); w = { since: a2, until: a2, lbl: 'anteontem' }; any = true; }
+    else if (/ontem/.test(t)) { var y = shiftDay(today, -1); w = { since: y, until: y, lbl: 'ontem' }; any = true; }
+    else if (/(7|sete) dias|semana/.test(t)) { w = { since: shiftDay(today, -6), until: today, lbl: 'últimos 7 dias' }; any = true; }
+    else if (/\bmes\b/.test(t)) { w = { since: today.slice(0, 8) + '01', until: today, lbl: 'este mês' }; any = true; }
+    else if (/hoje/.test(t)) any = true;
+    var hm = '(\\d{1,2})(?:[:h](\\d{2}))?\\s*(?:h|hs|hrs|horas)?';
+    var m = t.match(new RegExp('(?:\\bde\\b|\\bdas\\b|\\bdesde\\b|a partir d[ao]s?)\\s*(?:as\\s*)?' + hm + '(?:\\s*(?:ate|as|a|e)\\s*(?:as\\s*)?(?:(agora)|' + hm + '))?'));
+    var single = w.since === w.until;
+    if (m && single && +m[1] < 24) {
+      w.h0 = iaHM(+m[1], +(m[2] || 0));
+      if (m[4]) w.h1 = Math.min(24, iaHM(+m[4], +(m[5] || 0)));
+      w.lbl = 'das ' + iaFmtH(w.h0) + ' até ' + (w.h1 != null ? iaFmtH(w.h1) : 'agora') + ' (' + w.lbl + ')'; any = true;
+    } else if (single && (m = t.match(/ultim[ao]s?\s*(\d+)?\s*(hora|horas|h|minutos|min)\b/))) {
+      var n = +(m[1] || 1), hrs = /min/.test(m[2]) ? n / 60 : n;
+      w = { since: today, until: today, h0: Math.max(0, rsHourNow() - hrs), lbl: 'na' + (hrs === 1 ? ' última hora' : 's últimas ' + (m[1] || 1) + ' ' + (/min/.test(m[2]) ? 'minutos' : 'horas')) }; any = true;
+    }
+    if (w.since === today && w.until === today && w.h1 == null) w.h1 = null; /* ate agora */
+    var mets = IA_MET.filter(function(x){ return x[1].test(t); }).map(function(x){ return x[0]; });
+    var type = /\b(ad|ads|anuncio|anuncios|criativo|criativos)\b/.test(t) ? 'ad' : /\bcampanhas?\b/.test(t) ? 'camp' : /\bcontas?\b/.test(t) ? 'acct' : /\b(oferta|ofertas|produto)\b/.test(t) ? 'offer' : '';
+    var rank = /\b(qual|quais|melhor|melhores|pior|piores|mais|menos|top|ranking)\b/.test(t);
+    /* termo a buscar: palavra logo depois de ad/campanha/conta/oferta, ou as palavras que nao sao comuns */
+    var term = '', mt = t.match(/\b(?:ad|anuncio|criativo|campanha|conta|oferta|produto)\s+["']?([a-z0-9][a-z0-9 _\-.]*?)["']?(?=\s+(?:fez|teve|vendeu|gastou|lucrou|faturou|tem|de|das|desde|hoje|ontem|esta|ta|deu|no|na|em)\b|[?!.,]|$)/);
+    if (mt) term = mt[1].trim().split(/\s+/).filter(function(x){ return IA_STOP.indexOf(x) < 0; }).join(' ');
+    if (!term) term = t.replace(/[?!.,;:()"']/g, ' ').split(/\s+/).filter(function(x){ return x && IA_STOP.indexOf(x) < 0 && !/^\d{1,2}([:h]\d{2})?h?$/.test(x) && !/^\d{1,2}$/.test(x); }).join(' ');
+    return { q: q, w: w, mets: mets, type: type, rank: rank, term: term, any: any || !!term || mets.length > 0 };
+  }
+  /* janela em ms (fuso BR) */
+  function iaWinMs(w) {
+    var s = Date.parse(w.since + 'T00:00:00-03:00') + (w.h0 || 0) * 3600e3;
+    var e = w.h1 != null ? Date.parse(w.since + 'T00:00:00-03:00') + w.h1 * 3600e3 : Math.min(Date.now(), Date.parse(w.until + 'T00:00:00-03:00') + 864e5);
+    return [s, e];
+  }
+  function iaHrsSum(arr, w) { if (!arr) return 0; var h1 = w.h1 != null ? w.h1 : (w.since === rsToday() ? rsHourNow() : 24); return rsSumHours(arr, h1) - (w.h0 ? rsSumHours(arr, w.h0) : 0); }
+  /* gasto/impr/cliques por HORA de cada ANUNCIO num dia (BR) — Meta level=ad + breakdown hourly */
+  function iaAdHours(day) {
+    var key = 'h' + day; if (IA.ads[key]) return Promise.resolve(IA.ads[key]);
+    var ads = {}, tr = encodeURIComponent(JSON.stringify({ since: shiftDay(day, -1), until: shiftDay(day, 1) })), i = 0, accts = RS.base.accts;
+    function one(a) {
+      var off = Number(a.timezone_offset_hours_utc) || 0;
+      return fjPaged(API + '/' + a.id + '/insights?level=ad&fields=ad_id,ad_name,campaign_id,campaign_name,spend,impressions,inline_link_clicks&breakdowns=hourly_stats_aggregated_by_advertiser_time_zone&time_range=' + tr + '&limit=500&access_token=' + a._tk).then(function(rows) {
+        rows.forEach(function(r) {
+          var hh = parseInt((r.hourly_stats_aggregated_by_advertiser_time_zone || '').slice(0, 2)) || 0;
+          var br = new Date(Date.parse(r.date_start + 'T' + ('0' + hh).slice(-2) + ':00:00Z') - off * 3600e3 - 3 * 3600e3);
+          if (rsDay(br) !== day) return;
+          var o = ads[r.ad_id] || (ads[r.ad_id] = { id: r.ad_id, name: r.ad_name, cid: r.campaign_id, cname: r.campaign_name, acctId: a.id, sp: rsZ24(), im: rsZ24(), ck: rsZ24() });
+          var h = br.getUTCHours(); o.sp[h] += (parseFloat(r.spend) || 0) * (a._rate || 1); o.im[h] += parseInt(r.impressions) || 0; o.ck[h] += parseInt(r.inline_link_clicks) || 0;
+        });
+      });
+    }
+    function next() { if (i >= accts.length) return Promise.resolve(); var b = accts.slice(i, i + 5); i += 5; return Promise.all(b.map(function(a){ return one(a).catch(function(){}); })).then(next); }
+    return next().then(function(){ IA.ads[key] = ads; return ads; });
+  }
+  /* anuncios de varios dias (agregado) */
+  function iaAdAgg(rg) {
+    var key = 'g' + rg.since + rg.until; if (IA.ads[key]) return Promise.resolve(IA.ads[key]);
+    var ads = {}, tr = encodeURIComponent(JSON.stringify(rg)), i = 0, accts = RS.base.accts;
+    function one(a) {
+      return fjPaged(API + '/' + a.id + '/insights?level=ad&fields=ad_id,ad_name,campaign_id,campaign_name,spend,impressions,inline_link_clicks&time_range=' + tr + '&limit=500&access_token=' + a._tk).then(function(rows) {
+        rows.forEach(function(r){ ads[r.ad_id] = { id: r.ad_id, name: r.ad_name, cid: r.campaign_id, cname: r.campaign_name, acctId: a.id, spend: (parseFloat(r.spend) || 0) * (a._rate || 1), imp: parseInt(r.impressions) || 0, clk: parseInt(r.inline_link_clicks) || 0 }; });
+      });
+    }
+    function next() { if (i >= accts.length) return Promise.resolve(); var b = accts.slice(i, i + 5); i += 5; return Promise.all(b.map(function(a){ return one(a).catch(function(){}); })).then(next); }
+    return next().then(function(){ IA.ads[key] = ads; return ads; });
+  }
+  function iaAdMetrics(o, w) { return o.sp ? { spend: iaHrsSum(o.sp, w), imp: iaHrsSum(o.im, w), clk: iaHrsSum(o.ck, w) } : { spend: o.spend, imp: o.imp, clk: o.clk }; }
+  /* nome do anuncio de uma conversao: sub4 (padrao) ou o anuncio do Meta cujo ID esta em algum sub */
+  function iaEvAd(e, ads) {
+    var s = e.subs || {};
+    for (var k in s) if (ads[s[k]]) return ads[s[k]];
+    return null;
+  }
+  function iaEvText(e) { var s = e.subs || {}; return Object.keys(s).map(function(k){ return s[k]; }).join(' '); }
+  /* nome do anuncio da venda: rt_ad do RedTrack, ou o anuncio do Meta pelo ID */
+  function iaEvAdName(e, ads) { var s = e.subs || {}, a = iaEvAd(e, ads); return s.rt_ad || (a ? a.name : (s.sub4 || '')); }
+
+  /* ── motor ── */
+  function iaSmart(q) {
+    var P = iaParse(q);
+    if (!P.any) return false;
+    var item = { q: q, per: RS.period, html: '<div class="rs-loadmsg"><span class="spin"></span>Buscando no RedTrack e no Meta...</div>' };
+    IA.feed.unshift(item); iaRender();
+    var w = P.w, rg = { since: w.since, until: w.until }, single = w.since === w.until;
+    if (w.until === rsToday()) { delete RS.ev['r' + rg.since + rg.until]; delete RS.rep['r' + rg.since + rg.until]; delete RS.rep['u' + rg.since + rg.until]; delete IA.ads['h' + w.since]; delete IA.ads['g' + rg.since + rg.until]; } /* hoje: busca de novo (vendas dos ultimos minutos) */
+    Promise.all([rsSales(rg, true), P.type === 'ad' || P.type === '' ? (single ? iaAdHours(w.since) : iaAdAgg(rg)) : null, single ? null : (RS.daily ? null : rsLoadDaily())])
+      .then(function(r) { item.html = iaSmartAnswer(P, r[1] || {}); iaRender(); })
+      .catch(function(e) { item.html = iaTip('bad', 'Não consegui buscar os dados agora (' + rsEsc(e && e.message || 'erro') + '). Tente de novo.'); iaRender(); });
+    return true;
+  }
+  function iaSmartAnswer(P, ads) {
+    var w = P.w, rg = { since: w.since, until: w.until }, win = iaWinMs(w), conv = !!rsSrc(), single = w.since === w.until;
+    var evs = rsEvAll(rg).filter(function(e){ return e.ms >= win[0] && e.ms <= win[1]; });
+    var key = iaKey(P.term), camps = RS.base.camps;
+    /* resolve o alvo */
+    var tgt = null;
+    function findAds() {
+      if (!key) return [];
+      var hit = Object.keys(ads).map(function(id){ return ads[id]; }).filter(function(o){ return iaKey(o.name).indexOf(key) >= 0 || o.id === P.term; });
+      return hit;
+    }
+    function findCamps() { if (!key) return []; return Object.keys(camps).map(function(id){ return camps[id]; }).filter(function(c){ return iaKey(c.name).indexOf(key) >= 0 || c.id === P.term; }); }
+    function findAccts() { if (!key) return []; return RS.base.accts.filter(function(a){ return iaKey(a.name).indexOf(key) >= 0; }); }
+    var cfg = rsCfg(), offers = String(cfg.offers || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+    function findOffer() { if (!key) return []; return Object.keys(camps).map(function(id){ return camps[id]; }).filter(function(c){ return iaKey(rsOfferOf(c.name, offers)) === key; }); }
+    var order = P.type === 'ad' ? ['ad'] : P.type === 'camp' ? ['camp'] : P.type === 'acct' ? ['acct'] : P.type === 'offer' ? ['offer'] : ['camp', 'ad', 'acct', 'offer'];
+    var evHitByText = key ? evs.filter(function(e){ return iaKey(iaEvText(e)).indexOf(key) >= 0; }) : [];
+    for (var i = 0; i < order.length && !tgt && key; i++) {
+      var k = order[i], h;
+      if (k === 'ad') { h = findAds(); if (h.length || evHitByText.length) tgt = { kind: 'ad', ads: h }; }
+      if (k === 'camp') { h = findCamps(); if (h.length) tgt = { kind: 'camp', camps: h }; }
+      if (k === 'acct') { h = findAccts(); if (h.length) tgt = { kind: 'acct', accts: h, camps: Object.keys(camps).map(function(id){ return camps[id]; }).filter(function(c){ return h.some(function(a){ return a.id === c.acctId; }); }) }; }
+      if (k === 'offer') { h = findOffer(); if (h.length) tgt = { kind: 'offer', camps: h }; }
+    }
+    if (key && !tgt) return iaNotFound(P, ads, evs);
+    if (!tgt && P.rank) return iaRank(P, ads, evs);
+    /* filtra conversoes e soma Meta do alvo */
+    var sel, met = { spend: 0, imp: 0, clk: 0 }, names = [];
+    if (!tgt) {
+      sel = evs.filter(function(e){ return !e.id || camps[e.id] || !rsMatch(rsRep(rg)).on; });
+      Object.keys(camps).forEach(function(id){ var c = camps[id]; met.spend += single ? iaHrsSum(c.hours[w.since], w) : rsCampSum(c, rg, null, 's'); met.imp += single ? iaHrsSum(c.hImp[w.since], w) : rsCampSum(c, rg, null, 'i'); met.clk += single ? iaHrsSum(c.hClk[w.since], w) : rsCampSum(c, rg, null, 'k'); });
+    } else if (tgt.kind === 'ad') {
+      var ids = {}; tgt.ads.forEach(function(o){ ids[o.id] = 1; var mm = iaAdMetrics(o, w); met.spend += mm.spend; met.imp += mm.imp; met.clk += mm.clk; names.push(o); });
+      sel = evs.filter(function(e){ var s = e.subs || {}; for (var k2 in s) if (ids[s[k2]]) return true; return iaKey(iaEvText(e)).indexOf(key) >= 0; });
+    } else {
+      var cids = {}; tgt.camps.forEach(function(c){ cids[c.id] = 1; names.push(c);
+        met.spend += single ? iaHrsSum(c.hours[w.since], w) : rsCampSum(c, rg, null, 's'); met.imp += single ? iaHrsSum(c.hImp[w.since], w) : rsCampSum(c, rg, null, 'i'); met.clk += single ? iaHrsSum(c.hClk[w.since], w) : rsCampSum(c, rg, null, 'k'); });
+      sel = evs.filter(function(e){ return cids[e.id]; });
+    }
+    var sales = sel.filter(function(e){ return e.t !== 'i'; }).sort(function(a, b){ return a.ms - b.ms; }), ics = sel.filter(function(e){ return e.t === 'i'; });
+    var rev = sales.reduce(function(s, e){ return s + e.rev; }, 0), prof = rev - met.spend;
+    var what = !tgt ? 'No total' : tgt.kind === 'ad' ? 'O anúncio <b>' + rsEsc(names.length === 1 ? names[0].name : P.term.toUpperCase()) + '</b>' : tgt.kind === 'camp' ? 'A campanha <b>' + rsEsc(names.length === 1 ? names[0].name : P.term) + '</b>' : tgt.kind === 'acct' ? 'A conta <b>' + rsEsc(tgt.accts.map(function(a){ return a.name; }).join(', ')) + '</b>' : 'A oferta <b>' + rsEsc(P.term) + '</b>';
+    var mainMet = P.mets[0] || 'vendas', headTxt = {
+      vendas: 'fez <b>' + sales.length + ' venda' + (sales.length === 1 ? '' : 's') + '</b>' + (rev ? ' (' + rsMoney(rev, 0) + ')' : ''),
+      faturado: 'faturou <b>' + rsMoney(rev) + '</b> em ' + sales.length + ' venda(s)', lucro: 'deu <b class="' + (prof >= 0 ? 'pos' : 'neg') + '">' + rsMoney(prof) + '</b> de lucro',
+      gasto: 'gastou <b>' + rsMoney(met.spend) + '</b>', roas: 'teve ROAS de <b>' + (met.spend ? (rev / met.spend).toFixed(2).replace('.', ',') + 'x' : '&mdash;') + '</b>',
+      cpa: 'teve CPA de <b>' + (sales.length ? rsMoney(met.spend / sales.length) : '&mdash; (sem vendas)') + '</b>', checkouts: 'teve <b>' + ics.length + ' checkouts</b>',
+      cliques: 'teve <b>' + Math.round(met.clk) + ' cliques</b>', ctr: 'teve CTR de <b>' + (met.imp ? rsPct(met.clk / met.imp, 2) : '&mdash;') + '</b>', cpc: 'teve CPC de <b>' + (met.clk ? rsMoney(met.spend / met.clk) : '&mdash;') + '</b>'
+    }[mainMet];
+    var html = '<p class="ia-p ia-head">' + what + ' ' + headTxt + ' <span class="ia-win">' + rsEsc(w.lbl) + '</span>.</p>';
+    html += '<div class="ia-kpis">' + [['Vendas', sales.length], ['Faturado', rsMoney(rev, 0)], ['Gasto', rsMoney(met.spend, 0)], ['Lucro', '<span class="' + (prof >= 0 ? 'pos' : 'neg') + '">' + rsMoney(prof, 0) + '</span>'],
+      ['ROAS', met.spend ? (rev / met.spend).toFixed(2).replace('.', ',') + 'x' : '&mdash;'], ['CPA', sales.length ? rsMoney(met.spend / sales.length, 0) : '&mdash;'], ['Checkouts', ics.length], ['Cliques', Math.round(met.clk)]]
+      .map(function(k){ return '<div><span>' + k[0] + '</span><b>' + k[1] + '</b></div>'; }).join('') + '</div>';
+    if (!conv) html += iaTip('warn', 'Sem RedTrack configurado: vendas e faturado ficam zerados.');
+    if (sales.length) {
+      html += '<div class="ia-st">Vendas uma a uma (' + sales.length + ')</div>' + iaTable(['Horário', 'Valor', 'Campanha', 'Anúncio'], sales.map(function(e) {
+        var ad = iaEvAd(e, ads), c = camps[e.id], s = e.subs || {};
+        return ['<b>' + hhmmBR(e.ms) + '</b>' + (single ? '' : ' <span class="rs-nc">' + rsBrDateOf(e.ms).slice(8) + '/' + rsBrDateOf(e.ms).slice(5, 7) + '</span>'), rsMoney(e.rev), rsEsc(c ? c.name : (s.rt_campaign || s.sub6 || e.id || '—')), rsEsc(s.rt_ad || (ad ? ad.name : (s.sub4 || s.sub1 || '—')))];
+      }), [0, 2, 3]);
+      var byH = {}; sales.forEach(function(e){ var h = hhmmBR(e.ms).slice(0, 2) + 'h'; byH[h] = (byH[h] || 0) + 1; });
+      html += '<p class="ia-p ia-mut">Por hora: ' + Object.keys(byH).sort().map(function(h){ return '<b>' + h + '</b> ' + byH[h]; }).join(' &middot; ') + '</p>';
+    } else if (conv) html += iaTip('info', 'Nenhuma venda registrada no RedTrack ' + rsEsc(w.lbl) + (tgt ? ' para esse alvo' : '') + '.');
+    if (ics.length && P.mets.indexOf('checkouts') >= 0) html += '<p class="ia-p ia-mut">Checkouts às: ' + ics.sort(function(a, b){ return a.ms - b.ms; }).map(function(e){ return hhmmBR(e.ms); }).join(', ') + '</p>';
+    if (tgt && tgt.kind === 'ad' && names.length > 1) html += '<p class="ia-p ia-mut">Somei ' + names.length + ' anúncios com "' + rsEsc(P.term) + '" no nome: ' + names.map(function(o){ return rsEsc(o.name) + ' (' + rsEsc(o.cname || '') + ')'; }).join('; ') + '.</p>';
+    if (tgt && tgt.kind !== 'ad' && names.length > 1) html += '<p class="ia-p ia-mut">Somei ' + names.length + ' campanhas: ' + names.map(function(c){ return rsEsc(c.name); }).join('; ') + '.</p>';
+    if (tgt && tgt.kind === 'ad' && !names.length) html += iaTip('warn', 'Achei as vendas pelo texto "' + rsEsc(P.term) + '" no RedTrack, mas nenhum anúncio do Meta com esse nome teve gasto ' + rsEsc(w.lbl) + ', por isso o gasto aparece zerado.');
+    if (single && w.h0) html += '<p class="ia-p ia-mut">Gasto, cliques e impressões do Meta vêm por hora; na hora quebrada (' + iaFmtH(w.h0) + ') a conta é proporcional.</p>';
+    return html + '<div class="ia-more"><button type="button" class="rs-link sm" data-iamore="' + rsEsc(P.q) + '">&#10024; Aprofundar com o Claude</button></div>';
+  }
+  function iaRank(P, ads, evs) {
+    var w = P.w, rg = { since: w.since, until: w.until }, single = w.since === w.until, camps = RS.base.camps, rows = [];
+    var by = P.type === 'ad' ? 'ad' : 'camp', met = P.mets[0] || 'vendas', worst = /pior|piores|menos/.test(iaNorm(P.q));
+    if (by === 'ad') {
+      Object.keys(ads).forEach(function(id){ var o = ads[id], mm = iaAdMetrics(o, w); rows.push({ name: o.name, sub: o.cname, spend: mm.spend, clk: mm.clk, sales: 0, rev: 0, ic: 0, id: id }); });
+      var idx = {}; rows.forEach(function(r){ idx[r.id] = r; });
+      var byName = {}; rows.forEach(function(r){ byName[iaKey(r.name)] = r; });
+      evs.forEach(function(e){
+        var a = iaEvAd(e, ads), r = a ? idx[a.id] : null, nm = (e.subs || {}).rt_ad;
+        if (!r && nm) r = byName[iaKey(nm)] || (byName[iaKey(nm)] = (rows[rows.length] = { name: nm, sub: (e.subs || {}).rt_campaign || '', spend: 0, clk: 0, sales: 0, rev: 0, ic: 0, id: 'rt:' + nm }));
+        if (!r) return; if (e.t === 'i') r.ic++; else { r.sales++; r.rev += e.rev; } });
+    } else {
+      Object.keys(camps).forEach(function(id){ var c = camps[id]; rows.push({ name: c.name, sub: c.acctName, id: id, spend: single ? iaHrsSum(c.hours[w.since], w) : rsCampSum(c, rg, null, 's'), clk: single ? iaHrsSum(c.hClk[w.since], w) : rsCampSum(c, rg, null, 'k'), sales: 0, rev: 0, ic: 0 }); });
+      var ix = {}; rows.forEach(function(r){ ix[r.id] = r; });
+      evs.forEach(function(e){ var r = ix[e.id]; if (!r) return; if (e.t === 'i') r.ic++; else { r.sales++; r.rev += e.rev; } });
+    }
+    rows = rows.filter(function(r){ return r.spend > 0.009 || r.sales; });
+    rows.forEach(function(r){ r.profit = r.rev - r.spend; r.roas = r.spend ? r.rev / r.spend : 0; r.cpa = r.sales ? r.spend / r.sales : 0; });
+    var f = { vendas: 'sales', faturado: 'rev', lucro: 'profit', gasto: 'spend', roas: 'roas', cpa: 'cpa', checkouts: 'ic', cliques: 'clk' }[met] || 'sales';
+    rows.sort(function(a, b){ return worst ? (a[f] - b[f]) : (b[f] - a[f]) || (b.profit - a.profit); });
+    if (!rows.length) return '<p class="ia-p">Nada com gasto ou venda ' + rsEsc(w.lbl) + '.</p>';
+    var r0 = rows[0];
+    return '<p class="ia-p ia-head">' + (worst ? 'Pior' : 'Melhor') + ' ' + (by === 'ad' ? 'anúncio' : 'campanha') + ' em ' + met + ' <span class="ia-win">' + rsEsc(w.lbl) + '</span>: <b>' + rsEsc(r0.name) + '</b> (' + r0.sales + ' vendas, ' + rsMoney(r0.rev, 0) + ', lucro ' + rsMoney(r0.profit, 0) + ').</p>' +
+      iaTable([by === 'ad' ? 'Anúncio' : 'Campanha', 'Vendas', 'Faturado', 'Gasto', 'Lucro', 'ROAS', 'Checkouts'], rows.slice(0, 12).map(function(r){ return ['<b>' + rsEsc(r.name) + '</b><span class="rs-nc">' + rsEsc(r.sub || '') + '</span>', r.sales, rsMoney(r.rev, 0), rsMoney(r.spend, 0), '<span class="' + (r.profit >= 0 ? 'pos' : 'neg') + '">' + rsMoney(r.profit, 0) + '</span>', r.spend ? r.roas.toFixed(2).replace('.', ',') + 'x' : '&mdash;', r.ic]; })) +
+      '<div class="ia-more"><button type="button" class="rs-link sm" data-iamore="' + rsEsc(P.q) + '">&#10024; Aprofundar com o Claude</button></div>' +
+      (by === 'ad' && !evs.some(function(e){ return iaEvAd(e, ads) || (e.subs || {}).rt_ad; }) && evs.length ? iaTip('warn', 'As vendas do RedTrack não trazem o anúncio (rt_ad ou ID). Sem isso não dá para saber qual anúncio vendeu; o ranking fica só com gasto e cliques.') : '');
+  }
+  function iaNotFound(P, ads, evs) {
+    var key = iaKey(P.term), names = [];
+    Object.keys(ads).forEach(function(id){ names.push(ads[id].name); });
+    Object.keys(RS.base.camps).forEach(function(id){ names.push(RS.base.camps[id].name); });
+    /* parecidos: compartilham um pedaco do termo */
+    var parts = P.term.split(/\s+/).map(iaKey).filter(function(x){ return x.length >= 2; });
+    var sim = names.filter(function(n){ var k = iaKey(n); return parts.some(function(p){ return k.indexOf(p) >= 0 || (p.length >= 3 && k.indexOf(p.slice(0, 3)) >= 0); }); }).slice(0, 8);
+    var sub = evs[0] && evs[0].subs ? Object.keys(evs[0].subs).map(function(k){ return k + '=' + rsEsc(String(evs[0].subs[k]).slice(0, 40)); }).join(' &middot; ') : '';
+    return iaTip('warn', 'Não achei nada chamado <b>"' + rsEsc(P.term) + '"</b> ' + rsEsc(P.w.lbl) + ' (procurei em anúncios e campanhas do Meta e nas vendas do RedTrack).') +
+      (sim.length ? '<p class="ia-p">Parecidos: ' + sim.map(function(n){ return '<b>' + rsEsc(n) + '</b>'; }).join(', ') + '</p>' : '') +
+      (sub ? '<p class="ia-p ia-mut">Exemplo do que o RedTrack manda em cada venda: ' + sub + '</p>' : '') +
+      '<div class="ia-more"><button type="button" class="rs-link sm" data-iamore="' + rsEsc(P.q) + '">&#10024; Perguntar ao Claude com os dados</button></div>';
   }
 
   document.querySelectorAll('#mdb .tab-btn').forEach(function(btn) {
